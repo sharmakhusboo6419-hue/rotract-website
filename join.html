@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotaract Club - Join Us</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+  <!-- Header / Navigation -->
+  <header class="bg-sky-600 text-white shadow-md">
+    <nav class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      
+      <!-- Logo & Brand Title -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="bg-white/90 p-1.5 rounded-lg shadow-sm group-hover:bg-white transition">
+          <img src="rotary-logo.png" alt="Rotary District 3192 Logo" class="h-10 w-auto object-contain">
+        </div>
+        <span class="text-xl font-bold tracking-wide">Rotaract Club</span>
+      </a>
+
+      <!-- Navigation Links -->
+      <div class="space-x-6 text-sm sm:text-base font-medium">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="projects.html" class="hover:underline">Projects</a>
+        <a href="join.html" class="hover:underline font-bold underline">Join Us</a>
+        <a href="contact.html" class="hover:underline">Contact</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-3xl mx-auto px-4 py-12 flex-grow w-full">
+    <div class="bg-white p-8 rounded-xl shadow-md border border-slate-200">
+      
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-sky-700 mb-2">Membership Application</h1>
+        <p class="text-slate-600">Join a vibrant team of change-makers and young leaders.</p>
+      </div>
+
+      <form id="joinForm" class="space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Full Name</label>
+          <input type="text" id="fullName" required class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Email Address</label>
+          <input type="email" id="email" required class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Phone Number</label>
+          <input type="tel" id="phone" required class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Primary Area of Interest</label>
+          <select id="interest" class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none">
+            <option>Community Service Projects</option>
+            <option>Professional Development Workshops</option>
+            <option>Club Operations & Event Planning</option>
+            <option>Public Relations & Marketing</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-slate-700">Why do you want to join Rotaract?</label>
+          <textarea id="reason" rows="4" required class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none"></textarea>
+        </div>
+
+        <button type="submit" id="submitBtn" class="w-full bg-sky-600 text-white font-semibold py-3 rounded-md hover:bg-sky-700 transition shadow-sm">
+          Submit Application
+        </button>
+      </form>
+      
+      <p id="joinResponseMsg" class="mt-4 text-center font-medium hidden p-3 rounded-lg text-sm"></p>
+    </div>
+  </main>
+
+  <footer class="bg-slate-800 text-slate-300 py-6 text-center text-sm border-t border-slate-700">
+    <p>&copy; Rotaract Club. All rights reserved.</p>
+  </footer>
+
+  <!-- Frontend JS Script -->
+  <script>
+    const API_JOIN_URL = 'http://127.0.0.1:5000/api/join';
+
+    // Helper function to handle retries for temporary 503 or network glitches
+    async function fetchWithRetry(url, options = {}, retries = 3, delay = 1000) {
+      try {
+        const response = await fetch(url, options);
+        if (response.status === 503 && retries > 0) {
+          console.warn(`Server busy (503). Retrying in ${delay}ms...`);
+          await new Promise(res => setTimeout(res, delay));
+          return fetchWithRetry(url, options, retries - 1, delay * 2);
+        }
+        return response;
+      } catch (error) {
+        if (retries > 0) {
+          console.warn(`Network error. Retrying in ${delay}ms...`);
+          await new Promise(res => setTimeout(res, delay));
+          return fetchWithRetry(url, options, retries - 1, delay * 2);
+        }
+        throw error;
+      }
+    }
+
+    document.getElementById('joinForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const submitBtn = document.getElementById('submitBtn');
+      const msg = document.getElementById('joinResponseMsg');
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting Application...';
+      msg.classList.add('hidden');
+
+      const payload = {
+        name: document.getElementById('fullName').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        interests: document.getElementById('interest').value,
+        reason: document.getElementById('reason').value
+      };
+
+      try {
+        const res = await fetchWithRetry(API_JOIN_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }, 3, 1000);
+
+        const data = await res.json();
+
+        if (res.ok) {
+          msg.textContent = `✅ ${data.message || 'Application submitted successfully!'}`;
+          msg.className = 'mt-4 text-center font-medium block p-3 rounded-lg text-sm text-emerald-700 bg-emerald-50 border border-emerald-200';
+          document.getElementById('joinForm').reset();
+        } else {
+          throw new Error(data.error || 'Failed to submit application.');
+        }
+      } catch (err) {
+        console.error('Submission Error:', err);
+        msg.textContent = `❌ ${err.message}`;
+        msg.className = 'mt-4 text-center font-medium block p-3 rounded-lg text-sm text-rose-700 bg-rose-50 border border-rose-200';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Application';
+      }
+    });
+  </script>
+
+</body>
+</html>
