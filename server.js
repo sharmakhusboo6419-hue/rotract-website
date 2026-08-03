@@ -1,6 +1,6 @@
 const path = require('path');
 
-require('dotenv').config({ path: path.join(__dirname, 'rotaract-backend', '.env') });
+require('dotenv').config();
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const Project = require('./models/Project.js');
 const Member = require('./models/Member.js');
-const { teamMembers, membersList } = require('./rotaract-backend/seed-data/members-data');
+const { teamMembers, membersList } = require('./seed-data/members-data');
 
 const teamMemberSchema = new mongoose.Schema(
   {
@@ -34,13 +34,14 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Database Connection
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
-  throw new Error('MONGO_URI is not set. Check rotaract-backend/.env or define it in the environment.');
+  throw new Error('MONGO_URI is not set. Check .env or define it in the environment.');
 }
 
 mongoose.connect(MONGO_URI)
@@ -200,6 +201,6 @@ app.post('/api/contact', async (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, '127.0.0.1', () => {
-  console.log(`🚀 Server running on http://127.0.0.1:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
