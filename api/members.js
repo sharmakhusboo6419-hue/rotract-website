@@ -24,7 +24,7 @@ module.exports = async function handler(req, res) {
       return res.status(200).json(members);
     } catch (error) {
       console.error('Error fetching members:', error);
-      return res.status(500).json({ error: 'Failed to fetch members' });
+      return res.status(200).json(fallbackMembers());
     }
   }
 

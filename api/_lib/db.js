@@ -17,7 +17,13 @@ async function connectToDatabase() {
   }
 
   if (!globalState.promise) {
-    globalState.promise = mongoose.connect(uri).then(() => mongoose.connection);
+    globalState.promise = mongoose
+      .connect(uri, {
+        // Prevent Vercel serverless functions from timing out on unreachable DB hosts.
+        serverSelectionTimeoutMS: 4000,
+        connectTimeoutMS: 4000,
+      })
+      .then(() => mongoose.connection);
   }
 
   try {
