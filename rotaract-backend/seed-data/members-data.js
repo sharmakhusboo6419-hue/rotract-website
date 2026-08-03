@@ -37,13 +37,13 @@ const teamMembers = [
     photoUrl: DEFAULT_AVATAR,
   },
   {
-    name: 'adithyian vinod',
+    name: 'Adithyian Vinod',
     role: 'Community Service Director',
     bio: 'The community service director is responsible for overseeing the club\'s community service projects, ensuring that they align with the club\'s mission and provide value to the community.',
     photoUrl: DEFAULT_AVATAR,
   },
   {
-    name: 'monisha kumari',
+    name: 'Monisha kumari',
     role: 'Community Service Director',
     bio: 'The community service director is responsible for overseeing the club\'s community service projects, ensuring that they align with the club\'s mission and provide value to the community.',
     photoUrl: DEFAULT_AVATAR,
@@ -66,18 +66,18 @@ const teamMembers = [
 
 const membersList = [
   {
-    name: 'Vedant Salvi',
+    name: 'skanda',
     role: 'President',
     email: 'president.racpc@presidency.edu.in',
-    year: '2024-25',
+    year: '2025-26',
     bio: 'President of Rotaract Club of Presidency College.',
     photoUrl: DEFAULT_AVATAR,
   },
   {
-    name: 'Moksha',
-    role: 'Public Relations Director',
+    name: 'vaani ray',
+    role: 'director of events',
     email: 'pr.racpc@presidency.edu.in',
-    year: '2024-25',
+    year: '2026-27',
     photoUrl: DEFAULT_AVATAR,
   },
   {

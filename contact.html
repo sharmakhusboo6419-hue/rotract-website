@@ -37,6 +37,7 @@
       <!-- Navigation Links -->
       <div class="space-x-6 text-sm sm:text-base font-medium">
         <a href="index.html" class="hover:underline">Home</a>
+        <a href="about.html" class="hover:underline">About</a>
         <a href="projects.html" class="hover:underline">Projects</a>
         <a href="join.html" class="hover:underline">Join Us</a>
         <a href="contact.html" class="hover:underline">Contact</a>
@@ -162,7 +163,7 @@
       const slider = document.getElementById("membersSlider");
 
       try {
-        const response = await fetch("http://127.0.0.1:5000/api/members");
+        const response = await fetch("/api/members");
         if (!response.ok) throw new Error("Failed to load members");
 
         const members = await response.json();
@@ -202,7 +203,7 @@
 
       } catch (err) {
         console.error("Error fetching members:", err);
-        slider.innerHTML = `<p class="text-red-500 text-center w-full py-4">Unable to connect to backend server. Make sure node server is running on port 5000.</p>`;
+        slider.innerHTML = `<p class="text-red-500 text-center w-full py-4">Unable to load member details right now.</p>`;
       }
     }
 
@@ -246,7 +247,7 @@
         };
 
         try {
-          const res = await fetch("http://127.0.0.1:5000/api/contact", {
+          const res = await fetch("/api/contact", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(formData)
@@ -261,7 +262,7 @@
           }
         } catch (err) {
           console.error("Error sending message:", err);
-          responseMsg.textContent = "❌ Failed to send message. Please try again or check backend server.";
+          responseMsg.textContent = "❌ Failed to send message. Please try again.";
           responseMsg.className = "mt-4 text-center text-sm font-medium text-red-600";
         } finally {
           responseMsg.classList.remove("hidden");
