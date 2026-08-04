@@ -168,6 +168,12 @@ body.site-shell main {
   text-transform: uppercase;
 }
 
+.presidency-word {
+  font-size: 1.2em;
+  font-weight: 800;
+  line-height: 1;
+}
+
 .hero-title {
   margin: 1rem auto 1rem;
   max-width: 14ch;
