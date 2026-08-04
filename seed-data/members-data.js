@@ -58,7 +58,7 @@ const teamMembers = [
     role: 'Cultural Event Director',
     bio:
       'The Cultural Event Director in  Rotaract Club is responsible for planning and managing all cultural and entertainment activities that strengthen fellowship, celebrate diversity, and encourage member participation. While each club may define director roles differently, Rotaract clubs commonly assign directors to lead specific areas and organize activities aligned with the club\'s annual goals.',
-    photoUrl: buildAvatarDataUri('Khusboo Sharma')
+    photoUrl: '/images/khusboo-sharma.jpeg'
   },
   {
     name: 'Dolly Gupta',
