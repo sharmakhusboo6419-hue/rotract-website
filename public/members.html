@@ -5,11 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rotaract Club - Our Team</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+<body class="site-shell flex flex-col min-h-screen">
 
-  <header class="bg-sky-600 text-white shadow-md">
-    <nav class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+  <header class="site-header">
+    <nav>
       <a href="index.html" class="flex items-center gap-3 group">
         <div class="bg-white/90 p-1.5 rounded-lg shadow-sm group-hover:bg-white transition">
           <img src="https://drive.google.com/uc?export=view&id=1KgwIjgAFaTCj1DE-qDs01FCwo2S7arL0" alt="Club Logo" class="h-10 w-auto object-contain">
@@ -27,61 +28,62 @@
     </nav>
   </header>
 
-  <main class="max-w-6xl mx-auto px-4 py-12 flex-grow w-full">
-    <div class="text-center mb-12">
-      <h1 class="text-4xl font-extrabold text-sky-700 mb-3">Meet Our Team</h1>
-      <p class="text-slate-600 max-w-2xl mx-auto">
+  <main class="page-section page-shell flex-grow w-full">
+    <div class="section-heading">
+      <span class="section-badge">Our Team</span>
+      <h1 class="section-title">Meet Our Team</h1>
+      <p class="section-subtitle">
         The dedicated leaders and passionate members driving positive impact in the Rotaract Club of Presidency College.
       </p>
     </div>
 
-    <div id="membersGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-16">
+    <div id="membersGrid" class="member-grid mb-16">
       <p class="text-slate-500 col-span-full text-center">Loading members...</p>
     </div>
 
-    <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-md border border-slate-200">
+    <div class="form-card" style="max-width: 42rem; margin-inline: auto;">
       <h2 class="text-2xl font-bold text-slate-800 mb-4 text-center">Add New Member</h2>
       
       <form id="memberForm" class="space-y-4">
-        <div>
+        <div class="form-field">
           <label class="block text-sm font-medium text-slate-700">Full Name</label>
-          <input type="text" id="memberName" required class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 outline-none">
+          <input type="text" id="memberName" required class="form-control">
         </div>
 
-        <div>
+        <div class="form-field">
           <label class="block text-sm font-medium text-slate-700">Role / Position</label>
-          <input type="text" id="memberRole" placeholder="e.g. President, Secretary" required class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 outline-none">
+          <input type="text" id="memberRole" placeholder="e.g. President, Secretary" required class="form-control">
         </div>
 
-        <div>
+        <div class="form-field">
           <label class="block text-sm font-medium text-slate-700">Photo URL</label>
-          <input type="url" id="memberPhoto" placeholder="https://images.unsplash.com/photo-..." required class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 outline-none">
+          <input type="url" id="memberPhoto" placeholder="https://images.unsplash.com/photo-..." required class="form-control">
         </div>
 
-        <div>
+        <div class="form-field">
           <label class="block text-sm font-medium text-slate-700">Email Address</label>
-          <input type="email" id="memberEmail" class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 outline-none">
+          <input type="email" id="memberEmail" class="form-control">
         </div>
 
-        <div>
+        <div class="form-field">
           <label class="block text-sm font-medium text-slate-700">Year</label>
-          <input type="text" id="memberYear" placeholder="e.g. 2024-25" class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 outline-none">
+          <input type="text" id="memberYear" placeholder="e.g. 2024-25" class="form-control">
         </div>
 
-        <div>
+        <div class="form-field">
           <label class="block text-sm font-medium text-slate-700">Short Bio</label>
-          <textarea id="memberBio" rows="3" placeholder="Brief introduction..." class="w-full mt-1 p-2.5 border border-slate-300 rounded-md focus:ring-2 focus:ring-sky-500 outline-none"></textarea>
+          <textarea id="memberBio" rows="3" placeholder="Brief introduction..." class="form-control"></textarea>
         </div>
 
-        <button type="submit" class="w-full bg-sky-600 text-white font-semibold py-3 rounded-md hover:bg-sky-700 transition">
+        <button type="submit" class="primary-button" style="width: 100%;">
           Add Member
         </button>
       </form>
-      <p id="memberMsg" class="mt-3 text-center text-sm hidden"></p>
+      <p id="memberMsg" class="status-message text-center text-sm hidden"></p>
     </div>
   </main>
 
-  <footer class="bg-slate-800 text-slate-300 py-6 text-center text-sm border-t border-slate-700">
+  <footer class="site-footer py-6 text-center text-sm border-t border-slate-700">
     <p>&copy; Rotaract Club of Presidency College. All rights reserved.</p>
   </footer>
 
@@ -100,11 +102,11 @@
         }
 
         grid.innerHTML = members.map(m => `
-          <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden text-center hover:shadow-md transition">
+          <div class="member-card text-center">
             <img src="${m.photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-100" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
-            <div class="p-4">
-              <h3 class="font-bold text-lg text-slate-900">${m.name}</h3>
-              <span class="inline-block my-1 px-3 py-1 bg-sky-100 text-sky-800 font-semibold text-xs rounded-full">${m.role}</span>
+            <div class="member-card__body">
+              <h3 class="member-name">${m.name}</h3>
+              <span class="member-role">${m.role}</span>
               ${m.bio ? `<p class="text-slate-600 text-xs mt-2 leading-relaxed">${m.bio}</p>` : ''}
               ${m.email ? `<a href="mailto:${m.email}" class="text-sky-600 text-xs mt-2 block hover:underline">${m.email}</a>` : ''}
             </div>

@@ -3,10 +3,22 @@ const MEMBER_CATEGORIES = { LEADERSHIP: 'leadership', MEMBER: 'member' };
 
 const teamMembers = [
   {
+    name: 'Avnish kumar',
+    role: 'vice-president',
+    bio: 'The Vice-President assists the President in leading the Rotaract Club and may take on additional responsibilities as needed.',
+    photoUrl: DEFAULT_AVATAR,
+  },
+  {
+    name: 'Patan Anif',
+    role: 'Sergeant-at-Arms',
+    bio: 'The Sergeant-at-Arms is responsible for maintaining order and decorum during club meetings and events. This role involves ensuring that meetings run smoothly, enforcing rules and procedures, and assisting with the setup and organization of events.',
+    photoUrl: '/home/khusboo/Downloads/IMG-20260610-WA0007.jpg (1).jpeg',
+  },
+  {
     name: 'Khusboo Sharma',
     role: 'Cultural Event Director',
     bio:
-      'The Cultural Event Director in a Rotaract Club is responsible for planning and managing all cultural and entertainment activities that strengthen fellowship, celebrate diversity, and encourage member participation. While each club may define director roles differently, Rotaract clubs commonly assign directors to lead specific areas and organize activities aligned with the club\'s annual goals.',
+      'The Cultural Event Director in  Rotaract Club is responsible for planning and managing all cultural and entertainment activities that strengthen fellowship, celebrate diversity, and encourage member participation. While each club may define director roles differently, Rotaract clubs commonly assign directors to lead specific areas and organize activities aligned with the club\'s annual goals.',
     photoUrl: DEFAULT_AVATAR,
   },
   {
@@ -18,10 +30,16 @@ const teamMembers = [
   },
   {
     name: 'deepak kumar barik',
-    role: ' opration Secretary',
+    role: 'Operation Secretary',
     bio:
       'The Secretary is one of the most important office bearers in a Rotaract Club. The Secretary is responsible for the club\'s administration, documentation, communication, and ensuring that club activities are properly recorded and reported.',
-    photoUrl: DEFAULT_AVATAR,
+    photoUrl: '/home/khusboo/Downloads/IMG_20260803_225704.jpg (1).jpeg',
+  },
+  {
+    name: 'Sibhi Solanki',
+    role: ' club treasurer',
+    bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
+    photoUrl: '/home/khusboo/Downloads/IMG-20260609-WA0452.jpg (1).jpeg',
   },
   {
     name: 'Sandhya Kumari',
@@ -31,7 +49,7 @@ const teamMembers = [
     photoUrl: DEFAULT_AVATAR,
   },
   {
-    name: 'ramya',
+    name: 'Ramya',
     role: 'Public Relations Director',
     bio:
       'The Public Relations (PR) Director in a Rotaract Club is responsible for building the club\'s image, promoting its activities, and maintaining communication with members, the public, and the media.',
@@ -55,13 +73,23 @@ const teamMembers = [
     bio: 'The professional development director is responsible for planning and organizing workshops, training sessions, and other development opportunities for club members.',
     photoUrl: DEFAULT_AVATAR,
   },
-
-
+  {
+    name: 'Hamid Ashraf',
+    role: 'club service director',
+    bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
+    photoUrl: DEFAULT_AVATAR,
+  },
+  {
+    name: 'Kaneez Fatima',
+    role: 'club service director',
+    bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
+    photoUrl: '/home/khusboo/Downloads/C8A4CDD4-C593-41DB-A574-4F7A4F43AFF8_Original.jpg (1).jpeg',
+  },
   {
     name: 'Noor Hoorain',
     role: 'Professional Development Director',
     bio: 'The professional development director is responsible for planning and organizing workshops, training sessions, and other development opportunities for club members.',
-    photoUrl: DEFAULT_AVATAR,
+    photoUrl: '/home/khusboo/Downloads/Noor ji .jpg (1).jpeg',
   },
 ].map((member) => ({ ...member, category: MEMBER_CATEGORIES.LEADERSHIP }));
 
@@ -69,31 +97,33 @@ const membersList = [
   {
     name: 'skanda',
     role: 'President',
-    email: 'president.racpc@presidency.edu.in',
-    year: '2025-26',
-    bio: 'President of Rotaract Club of Presidency College.',
+    bio: 'The President is the chief executive officer of the Rotaract Club, responsible for leading the club, presiding over meetings, and representing the club in official functions. The President provides vision, direction, and leadership to ensure the club achieves its goals and fulfills its mission.',
     photoUrl: DEFAULT_AVATAR,
   },
   {
-    name: 'vaani ray',
+    name: 'vani ray',
     role: 'director of events',
-    email: 'pr.racpc@presidency.edu.in',
-    year: '2026-27',
-    photoUrl: DEFAULT_AVATAR,
+    bio: 'The Director of Events is responsible for planning, organizing, and executing events and activities for the Rotaract Club. This role involves coordinating with members, managing logistics, and ensuring that events align with the club\'s objectives and values.',
+    photoUrl: '/home/khusboo/Downloads/3F8DD29C-CEFC-47FA-AAB1-8906143AB416.JPG.jpeg',
   },
   {
-    name: 'Sweeta',
-    role: 'Club Secretary',
-    email: 'secretary.racpc@presidency.edu.in',
-    year: '2024-25',
-    photoUrl: DEFAULT_AVATAR,
+    name: 'Dithipriya dutta',
+    role: 'public relational director',
+    bio: 'The Public Relations Director is responsible for managing the club\'s image, promoting its activities, and maintaining communication with members, the public, and the media. This role involves creating marketing materials, managing social media accounts, and fostering positive relationships with stakeholders.',
+    photoUrl: '/images/dithi-priya.jpeg',
   },
   {
-    name: 'Trisha',
-    role: 'Board Member',
-    year: '2024-25',
-    photoUrl: DEFAULT_AVATAR,
+    name: 'sathwik',
+    role: 'Club Treasurer',
+    bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
+    photoUrl: '/home/khusboo/Downloads/Club-Treasurer-Photo.jpg',
   },
+  {
+    name: 'Dhanush',
+    role: 'international service director',
+    bio: 'A dedicated member of the Rotaract Club, contributing to various initiatives and activities.',
+    photoUrl: '/home/khusboo/Downloads/Dhanush-Photo.jpg',
+  }
 ].map((member) => ({ ...member, category: MEMBER_CATEGORIES.MEMBER }));
 
 module.exports = { teamMembers, membersList };
