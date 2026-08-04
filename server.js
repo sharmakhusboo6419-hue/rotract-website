@@ -38,17 +38,57 @@ const LEGACY_PHOTO_MAP = {
   '3F8DD29C-CEFC-47FA-AAB1-8906143AB416.JPG (1).jpeg': '/images/vani-ray.jpeg'
 };
 
-function normalizePhotoUrl(photoUrl) {
+function escapeXml(value) {
+  return String(value).replace(/[&<>"]|'/g, (character) => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&apos;'
+  }[character]));
+}
+
+function buildAvatarDataUri(name) {
+  const initials = String(name || 'Member')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(part => part[0])
+    .join('')
+    .toUpperCase() || 'M';
+
+  const palette = ['1d4ed8', '0f766e', 'b45309', '7c3aed', 'be123c', '0f172a', '2563eb'];
+  const hash = [...String(name || 'Member')].reduce((value, character) => value + character.charCodeAt(0), 0);
+  const background = palette[hash % palette.length];
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="${escapeXml(name || 'Member')}">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#${background}" />
+          <stop offset="100%" stop-color="#1e40af" />
+        </linearGradient>
+      </defs>
+      <rect width="400" height="400" rx="48" fill="url(#g)" />
+      <circle cx="200" cy="170" r="74" fill="rgba(255,255,255,0.16)" />
+      <text x="50%" y="56%" text-anchor="middle" dominant-baseline="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="112" font-weight="700">${escapeXml(initials)}</text>
+    </svg>
+  `;
+
+  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg.replace(/\s{2,}/g, ' ').trim())}`;
+}
+
+function normalizePhotoUrl(photoUrl, name = 'Member') {
   if (!photoUrl || typeof photoUrl !== 'string') {
-    return photoUrl;
+    return buildAvatarDataUri(name);
   }
 
-  if (photoUrl.startsWith('/images/') || photoUrl.startsWith('http://') || photoUrl.startsWith('https://')) {
+  if (photoUrl.startsWith('/images/') || photoUrl.startsWith('http://') || photoUrl.startsWith('https://') || photoUrl.startsWith('data:image/')) {
     return photoUrl;
   }
 
   const fileName = path.basename(photoUrl);
-  return LEGACY_PHOTO_MAP[fileName] || photoUrl;
+  return LEGACY_PHOTO_MAP[fileName] || buildAvatarDataUri(name);
 }
 
 const app = express();
@@ -75,20 +115,20 @@ app.get('/api/members', async (req, res) => {
     if (mongoose.connection.readyState !== 1) {
       return res.json([...teamMembers, ...membersList].map((member) => ({
         ...member,
-        photoUrl: normalizePhotoUrl(member.photoUrl)
+        photoUrl: normalizePhotoUrl(member.photoUrl, member.name)
       })));
     }
 
     const members = await TeamMember.find().sort({ createdAt: -1 });
     const normalizedMembers = members.map((member) => ({
       ...member.toObject(),
-      photoUrl: normalizePhotoUrl(member.photoUrl)
+      photoUrl: normalizePhotoUrl(member.photoUrl, member.name)
     }));
 
     if (!normalizedMembers.length) {
       return res.json([...teamMembers, ...membersList].map((member) => ({
         ...member,
-        photoUrl: normalizePhotoUrl(member.photoUrl)
+        photoUrl: normalizePhotoUrl(member.photoUrl, member.name)
       })));
     }
 
