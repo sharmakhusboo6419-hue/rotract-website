@@ -29,6 +29,28 @@ const teamMemberSchema = new mongoose.Schema(
 
 const TeamMember = mongoose.models.TeamMember || mongoose.model('TeamMember', teamMemberSchema);
 
+const LEGACY_PHOTO_MAP = {
+  'IMG-20260610-WA0007.jpg (1).jpeg': '/images/avnish-kumar.jpeg',
+  'IMG_20260803_225704.jpg (1).jpeg': '/images/deepak-kumar-barik.jpeg',
+  'IMG-20260609-WA0452.jpg (1).jpeg': '/images/sibhi-solanki.jpeg',
+  'C8A4CDD4-C593-41DB-A574-4F7A4F43AFF8_Original.jpg (1).jpeg': '/images/kaneez-fatima.jpeg',
+  'Noor ji .jpg (1).jpeg': '/images/noor-hoorain.jpeg',
+  '3F8DD29C-CEFC-47FA-AAB1-8906143AB416.JPG (1).jpeg': '/images/vani-ray.jpeg'
+};
+
+function normalizePhotoUrl(photoUrl) {
+  if (!photoUrl || typeof photoUrl !== 'string') {
+    return photoUrl;
+  }
+
+  if (photoUrl.startsWith('/images/') || photoUrl.startsWith('http://') || photoUrl.startsWith('https://')) {
+    return photoUrl;
+  }
+
+  const fileName = path.basename(photoUrl);
+  return LEGACY_PHOTO_MAP[fileName] || photoUrl;
+}
+
 const app = express();
 
 // Middleware
@@ -51,16 +73,26 @@ mongoose.connect(MONGO_URI)
 app.get('/api/members', async (req, res) => {
   try {
     if (mongoose.connection.readyState !== 1) {
-      return res.json([...teamMembers, ...membersList]);
+      return res.json([...teamMembers, ...membersList].map((member) => ({
+        ...member,
+        photoUrl: normalizePhotoUrl(member.photoUrl)
+      })));
     }
 
     const members = await TeamMember.find().sort({ createdAt: -1 });
+    const normalizedMembers = members.map((member) => ({
+      ...member.toObject(),
+      photoUrl: normalizePhotoUrl(member.photoUrl)
+    }));
 
-    if (!members.length) {
-      return res.json([...teamMembers, ...membersList]);
+    if (!normalizedMembers.length) {
+      return res.json([...teamMembers, ...membersList].map((member) => ({
+        ...member,
+        photoUrl: normalizePhotoUrl(member.photoUrl)
+      })));
     }
 
-    res.json(members);
+    res.json(normalizedMembers);
   } catch (error) {
     console.error('Error fetching members:', error);
     res.status(500).json({ error: 'Failed to retrieve members' });
@@ -79,7 +111,7 @@ app.post('/api/members', async (req, res) => {
       name,
       role,
       email,
-      photoUrl,
+      photoUrl: normalizePhotoUrl(photoUrl),
       bio,
       year,
       category: category || 'member'

@@ -6,13 +6,13 @@ const teamMembers = [
     name: 'Avnish kumar',
     role: 'vice-president',
     bio: 'The Vice-President assists the President in leading the Rotaract Club and may take on additional responsibilities as needed.',
-    photoUrl: DEFAULT_AVATAR,
+    photoUrl: '/images/avnish-kumar.jpeg',
   },
   {
     name: 'Patan Anif',
     role: 'Sergeant-at-Arms',
     bio: 'The Sergeant-at-Arms is responsible for maintaining order and decorum during club meetings and events. This role involves ensuring that meetings run smoothly, enforcing rules and procedures, and assisting with the setup and organization of events.',
-    photoUrl: '/home/khusboo/Downloads/IMG-20260610-WA0007.jpg (1).jpeg',
+    photoUrl: '/images/avnish-kumar.jpeg',
   },
   {
     name: 'Khusboo Sharma',
@@ -33,13 +33,13 @@ const teamMembers = [
     role: 'Operation Secretary',
     bio:
       'The Secretary is one of the most important office bearers in a Rotaract Club. The Secretary is responsible for the club\'s administration, documentation, communication, and ensuring that club activities are properly recorded and reported.',
-    photoUrl: '/home/khusboo/Downloads/IMG_20260803_225704.jpg (1).jpeg',
+    photoUrl: '/images/deepak-kumar-barik.jpeg',
   },
   {
     name: 'Sibhi Solanki',
     role: ' club treasurer',
     bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
-    photoUrl: '/home/khusboo/Downloads/IMG-20260609-WA0452.jpg (1).jpeg',
+    photoUrl: '/images/sibhi-solanki.jpeg',
   },
   {
     name: 'Sandhya Kumari',
@@ -83,13 +83,13 @@ const teamMembers = [
     name: 'Kaneez Fatima',
     role: 'club service director',
     bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
-    photoUrl: '/home/khusboo/Downloads/C8A4CDD4-C593-41DB-A574-4F7A4F43AFF8_Original.jpg (1).jpeg',
+    photoUrl: '/images/kaneez-fatima.jpeg',
   },
   {
     name: 'Noor Hoorain',
     role: 'Professional Development Director',
     bio: 'The professional development director is responsible for planning and organizing workshops, training sessions, and other development opportunities for club members.',
-    photoUrl: '/home/khusboo/Downloads/Noor ji .jpg (1).jpeg',
+    photoUrl: '/images/noor-hoorain.jpeg',
   },
 ].map((member) => ({ ...member, category: MEMBER_CATEGORIES.LEADERSHIP }));
 
@@ -104,7 +104,7 @@ const membersList = [
     name: 'vani ray',
     role: 'director of events',
     bio: 'The Director of Events is responsible for planning, organizing, and executing events and activities for the Rotaract Club. This role involves coordinating with members, managing logistics, and ensuring that events align with the club\'s objectives and values.',
-    photoUrl: '/home/khusboo/Downloads/3F8DD29C-CEFC-47FA-AAB1-8906143AB416.JPG.jpeg',
+    photoUrl: '/images/vani-ray.jpeg',
   },
   {
     name: 'Dithipriya dutta',
@@ -116,13 +116,13 @@ const membersList = [
     name: 'sathwik',
     role: 'Club Treasurer',
     bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
-    photoUrl: '/home/khusboo/Downloads/Club-Treasurer-Photo.jpg',
+    photoUrl: DEFAULT_AVATAR,
   },
   {
     name: 'Dhanush',
     role: 'international service director',
     bio: 'A dedicated member of the Rotaract Club, contributing to various initiatives and activities.',
-    photoUrl: '/home/khusboo/Downloads/Dhanush-Photo.jpg',
+    photoUrl: DEFAULT_AVATAR,
   }
 ].map((member) => ({ ...member, category: MEMBER_CATEGORIES.MEMBER }));
 
