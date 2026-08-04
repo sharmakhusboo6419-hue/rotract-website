@@ -45,7 +45,7 @@ const teamMembers = [
     name: 'Avnish kumar',
     role: 'vice-president',
     bio: 'The Vice-President assists the President in leading the Rotaract Club and may take on additional responsibilities as needed.',
-    photoUrl: buildAvatarDataUri('Avnish kumar')
+    photoUrl: '/images/avnish-kumar-2026.jpeg'
   },
   {
     name: 'Patan Anif',
@@ -65,7 +65,7 @@ const teamMembers = [
     role: 'Secretary',
     bio:
       'The Secretary is one of the most important office bearers in a Rotaract Club. The Secretary is responsible for the club\'s administration, documentation, communication, and ensuring that club activities are properly recorded and reported.',
-    photoUrl: buildAvatarDataUri('Dolly Gupta')
+    photoUrl: '/images/dolly-gupta.jpeg'
   },
   {
     name: 'Deepak kumar barik',
@@ -85,38 +85,38 @@ const teamMembers = [
     role: 'Public Relations Director',
     bio:
       'The Public Relations (PR) Director in a Rotaract Club is responsible for building the club\'s image, promoting its activities, and maintaining communication with members, the public, and the media.',
-    photoUrl: buildAvatarDataUri('Sandhya Kumari')
+    photoUrl: '/images/sandhya-kumari.jpeg'
   },
   {
     name: 'Ramya',
     role: 'Public Relations Director',
     bio:
       'The Public Relations (PR) Director in a Rotaract Club is responsible for building the club\'s image, promoting its activities, and maintaining communication with members, the public, and the media.',
-    photoUrl: buildAvatarDataUri('Ramya')
+    photoUrl: '/images/ramya.jpeg'
   },
   {
     name: 'Adithyian Vinod',
     role: 'Community Service Director',
     bio: 'The community service director is responsible for overseeing the club\'s community service projects, ensuring that they align with the club\'s mission and provide value to the community.',
-    photoUrl: buildAvatarDataUri('Adithyian Vinod')
+    photoUrl: '/images/adithyian-vinod.png'
   },
   {
     name: 'Monisha kumari',
     role: 'Community Service Director',
     bio: 'The community service director is responsible for overseeing the club\'s community service projects, ensuring that they align with the club\'s mission and provide value to the community.',
-    photoUrl: buildAvatarDataUri('Monisha kumari')
+    photoUrl: '/images/monisha-kumari.jpeg'
   },
   {
     name: 'kishan pandey',
     role: 'Professional Development Director',
     bio: 'The professional development director is responsible for planning and organizing workshops, training sessions, and other development opportunities for club members.',
-    photoUrl: buildAvatarDataUri('kishan pandey')
+    photoUrl: '/images/kishan-pandey.jpeg'
   },
   {
     name: 'Hamid Ashraf',
     role: 'club service director',
     bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
-    photoUrl: buildAvatarDataUri('Hamid Ashraf')
+    photoUrl: '/images/hamid-ashraf.jpeg'
   },
   {
     name: 'Kaneez Fatima',
@@ -137,7 +137,7 @@ const membersList = [
     name: 'skanda',
     role: 'President',
     bio: 'The President is the chief executive officer of the Rotaract Club, responsible for leading the club, presiding over meetings, and representing the club in official functions. The President provides vision, direction, and leadership to ensure the club achieves its goals and fulfills its mission.',
-    photoUrl: buildAvatarDataUri('skanda')
+    photoUrl: '/images/skanda.jpeg'
   },
   {
     name: 'vani ray',
@@ -155,13 +155,13 @@ const membersList = [
     name: 'sathwik',
     role: 'Club Treasurer',
     bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
-    photoUrl: buildAvatarDataUri('sathwik')
+    photoUrl: '/images/sathwik.jpeg'
   },
   {
     name: 'Dhanush',
     role: 'international service director',
     bio: 'A dedicated member of the Rotaract Club, contributing to various initiatives and activities.',
-    photoUrl: buildAvatarDataUri('Dhanush')
+    photoUrl: '/images/dhanush.jpeg'
   }
 ].map((member) => ({ ...member, category: MEMBER_CATEGORIES.MEMBER }));
 

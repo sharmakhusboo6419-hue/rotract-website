@@ -30,12 +30,19 @@ const teamMemberSchema = new mongoose.Schema(
 const TeamMember = mongoose.models.TeamMember || mongoose.model('TeamMember', teamMemberSchema);
 
 const LEGACY_PHOTO_MAP = {
-  'IMG-20260610-WA0007.jpg (1).jpeg': '/images/avnish-kumar.jpeg',
-  'IMG_20260803_225704.jpg (1).jpeg': '/images/deepak-kumar-barik.jpeg',
-  'IMG-20260609-WA0452.jpg (1).jpeg': '/images/sibhi-solanki.jpeg',
-  'C8A4CDD4-C593-41DB-A574-4F7A4F43AFF8_Original.jpg (1).jpeg': '/images/kaneez-fatima.jpeg',
-  'Noor ji .jpg (1).jpeg': '/images/noor-hoorain.jpeg',
-  '3F8DD29C-CEFC-47FA-AAB1-8906143AB416.JPG (1).jpeg': '/images/vani-ray.jpeg'
+  'IMG-20260731-WA0007.jpg.jpeg': '/images/dolly-gupta.jpeg',
+  'IMG-20260803-WA0032.jpg.jpeg': '/images/sathwik.jpeg',
+  'IMG_20260302_153939.jpg.jpeg': '/images/ramya.jpeg',
+  'IMG_20251122_154759830.jpg.jpeg': '/images/sandhya-kumari.jpeg',
+  'IMG_8305.JPG.jpeg': '/images/dhanush.jpeg',
+  'IMG_8304.JPG.jpeg': '/images/avnish-kumar-2026.jpeg',
+  'IMG_8303.JPG.jpeg': '/images/hamid-ashraf.jpeg',
+  'IMG_8302.JPG.jpeg': '/images/monisha-kumari.jpeg',
+  'IMG_8301.JPG.jpeg': '/images/khusboo-sharma.jpeg',
+  '88D3B1EC-D293-4976-A5F1-DBCF1D074DE1.jpeg': '/images/kishan-pandey.jpeg',
+  'file_0000000066a082118da2d06ae1ec659a.png': '/images/adithyian-vinod.png',
+  'IMG_3037.JPG (1).jpeg': '/images/skanda.jpeg',
+  'IMG_8300.JPG.jpeg': '/images/sandhya-alt.jpeg'
 };
 
 function escapeXml(value) {
