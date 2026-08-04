@@ -59,7 +59,7 @@ const teamMembers = [
     name: 'Adithyian Vinod',
     role: 'Community Service Director',
     bio: 'The community service director is responsible for overseeing the club\'s community service projects, ensuring that they align with the club\'s mission and provide value to the community.',
-    photoUrl: '/home/khusboo/Downloads/file_0000000066a082118da2d06ae1ec659a.png',
+    photoUrl: DEFAULT_AVATAR,
   },
   {
     name: 'Monisha kumari',
@@ -116,7 +116,7 @@ const membersList = [
     name: 'sathwik',
     role: 'Club Treasurer',
     bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
-    photoUrl: '/home/khusboo/Downloads/IMG-20260803-WA0032.jpg.jpeg',
+    photoUrl: DEFAULT_AVATAR,
   },
   {
     name: 'Dhanush',

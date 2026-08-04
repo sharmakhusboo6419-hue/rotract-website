@@ -22,6 +22,7 @@
         <a href="about.html" class="hover:underline">About</a>
         <a href="members.html" class="font-semibold underline">Members</a>
         <a href="join.html" class="hover:underline">Join Us</a>
+        <a href="contact.html" class="hover:underline">Contact</a>
       </div>
     </nav>
   </header>
@@ -99,17 +100,23 @@
           return;
         }
 
-        grid.innerHTML = members.map(m => `
-          <div class="member-card text-center">
-            <img src="${m.photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-100" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
-            <div class="member-card__body">
-              <h3 class="member-name">${m.name}</h3>
-              <span class="member-role">${m.role}</span>
-              ${m.bio ? `<p class="text-slate-600 text-xs mt-2 leading-relaxed">${m.bio}</p>` : ''}
-              ${m.email ? `<a href="mailto:${m.email}" class="text-sky-600 text-xs mt-2 block hover:underline">${m.email}</a>` : ''}
+        grid.innerHTML = members.map(m => {
+          const photoUrl = (m.photoUrl && typeof m.photoUrl === 'string' && m.photoUrl.trim())
+            ? m.photoUrl
+            : 'https://via.placeholder.com/150?text=No+Image';
+
+          return `
+            <div class="member-card text-center">
+              <img src="${photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-100" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image';">
+              <div class="member-card__body">
+                <h3 class="member-name">${m.name}</h3>
+                <span class="member-role">${m.role}</span>
+                ${m.bio ? `<p class="text-slate-600 text-xs mt-2 leading-relaxed">${m.bio}</p>` : ''}
+                ${m.email ? `<a href="mailto:${m.email}" class="text-sky-600 text-xs mt-2 block hover:underline">${m.email}</a>` : ''}
+              </div>
             </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } catch (err) {
         grid.innerHTML = `<p class="text-amber-600 col-span-full text-center">Unable to load members right now.</p>`;
       }

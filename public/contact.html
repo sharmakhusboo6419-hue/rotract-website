@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotaract Club - Contact Us</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="site-shell flex flex-col min-h-screen">
+  <header class="site-header">
+    <nav>
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="bg-white/90 p-1.5 rounded-lg shadow-sm group-hover:bg-white transition">
+          <img src="https://drive.google.com/uc?export=view&id=1KgwIjgAFaTCj1DE-qDs01FCwo2S7arL0" alt="Club Logo" class="h-10 w-auto object-contain">
+        </div>
+        <span class="text-xl font-bold tracking-wide">RACPC</span>
+      </a>
+
+      <div class="space-x-6 text-sm sm:text-base font-medium">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="about.html" class="hover:underline">About</a>
+        <a href="members.html" class="hover:underline">Members</a>
+        <a href="join.html" class="hover:underline">Join Us</a>
+        <a href="contact.html" class="font-semibold underline">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="page-section page-shell flex-grow w-full">
+    <div class="form-card" style="max-width: 42rem; margin-inline: auto;">
+      <div class="text-center mb-8">
+        <span class="section-badge">Collaborate With Us</span>
+        <h1 class="text-3xl font-bold text-sky-700 mb-2">Get in Touch</h1>
+        <p class="text-slate-600">We’d love to hear from individuals, organizations, and partners who want to collaborate with RACPC.</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4 mb-6 text-sm text-slate-700">
+        <p class="mb-2"><strong>Email:</strong> <a href="mailto:racpc.presidency@gmail.com" class="text-sky-700 underline">racpc.presidency@gmail.com</a></p>
+        <p><strong>Let’s work together on:</strong> events, outreach, community service, sponsorships, and student engagement.</p>
+      </div>
+
+      <form action="mailto:racpc.presidency@gmail.com" method="post" enctype="text/plain" class="space-y-5">
+        <div class="form-field">
+          <label class="block text-sm font-medium text-slate-700">Your Name</label>
+          <input type="text" name="name" required class="form-control">
+        </div>
+
+        <div class="form-field">
+          <label class="block text-sm font-medium text-slate-700">Email Address</label>
+          <input type="email" name="email" required class="form-control">
+        </div>
+
+        <div class="form-field">
+          <label class="block text-sm font-medium text-slate-700">Organization / Institution</label>
+          <input type="text" name="organization" class="form-control">
+        </div>
+
+        <div class="form-field">
+          <label class="block text-sm font-medium text-slate-700">How would you like to collaborate?</label>
+          <textarea name="message" rows="5" required class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="primary-button" style="width: 100%;">Send Message</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer py-6 text-center text-sm border-t border-slate-700">
+    <p>© Rotaract Club of Presidency College. All rights reserved.</p>
+  </footer>
+</body>
+</html>
