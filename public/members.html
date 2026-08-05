@@ -12,7 +12,7 @@
   <header class="site-header">
     <nav>
       <a href="index.html" class="flex items-center gap-3 group">
-        <div class="bg-white/90 p-1.5 rounded-lg shadow-sm group-hover:bg-white transition">
+        <div class="bg-black/40 p-1.5 rounded-lg shadow-sm group-hover:bg-white transition">
           <img src="images/site-logo.png" alt="Club Logo" class="h-10 w-auto object-contain">
         </div>
         <span class="text-xl font-bold tracking-wide">RACPC</span>
@@ -41,40 +41,40 @@
     </div>
 
     <div id="membersGrid" class="member-grid mb-16">
-      <p class="text-slate-500 col-span-full text-center">Loading members...</p>
+      <p class="text-slate-400 col-span-full text-center">Loading members...</p>
     </div>
 
     <div class="form-card" style="max-width: 42rem; margin-inline: auto;">
-      <h2 class="text-2xl font-bold text-slate-800 mb-4 text-center">Add New Member</h2>
+      <h2 class="text-2xl font-bold text-slate-100 mb-4 text-center">Add New Member</h2>
       
       <form id="memberForm" class="space-y-4">
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-700">Full Name</label>
+          <label class="block text-sm font-medium text-slate-200">Full Name</label>
           <input type="text" id="memberName" required class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-700">Role / Position</label>
+          <label class="block text-sm font-medium text-slate-200">Role / Position</label>
           <input type="text" id="memberRole" placeholder="e.g. President, Secretary" required class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-700">Photo URL</label>
+          <label class="block text-sm font-medium text-slate-200">Photo URL</label>
           <input type="url" id="memberPhoto" placeholder="https://images.unsplash.com/photo-..." required class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-700">Email Address</label>
+          <label class="block text-sm font-medium text-slate-200">Email Address</label>
           <input type="email" id="memberEmail" class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-700">Year</label>
+          <label class="block text-sm font-medium text-slate-200">Year</label>
           <input type="text" id="memberYear" placeholder="e.g. 2024-25" class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-700">Short Bio</label>
+          <label class="block text-sm font-medium text-slate-200">Short Bio</label>
           <textarea id="memberBio" rows="3" placeholder="Brief introduction..." class="form-control"></textarea>
         </div>
 
@@ -86,7 +86,7 @@
     </div>
   </main>
 
-  <footer class="site-footer py-6 text-center text-sm border-t border-slate-700">
+  <footer class="site-footer py-6 text-center text-sm border-t border-amber-500/30">
     <p>&copy; Rotaract Club of <span class="presidency-word">Presidency</span> College. All rights reserved.</p>
   </footer>
 
@@ -103,7 +103,7 @@
         .join('')
         .toUpperCase() || 'M';
 
-      const colors = ['1d4ed8', '0f766e', 'b45309', '7c3aed', 'be123c', '0f172a', '2563eb'];
+      const colors = ['d4af37', 'b8860b', '8b6914', 'c69c2e', 'e0b84b', 'a8801f', '5c4310'];
       const hash = [...String(name || 'Member')].reduce((value, character) => value + character.charCodeAt(0), 0);
       const background = colors[hash % colors.length];
 
@@ -112,7 +112,7 @@
           <defs>
             <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0%" stop-color="#${background}" />
-              <stop offset="100%" stop-color="#1e40af" />
+              <stop offset="100%" stop-color="#3a2e00" />
             </linearGradient>
           </defs>
           <rect width="400" height="400" rx="48" fill="url(#g)" />
@@ -129,7 +129,7 @@
         const members = await res.json();
 
         if (!members || members.length === 0) {
-          grid.innerHTML = `<p class="text-slate-500 col-span-full text-center">No members added yet. Use the form below to add members!</p>`;
+          grid.innerHTML = `<p class="text-slate-400 col-span-full text-center">No members added yet. Use the form below to add members!</p>`;
           return;
         }
 
@@ -140,18 +140,18 @@
 
           return `
             <div class="member-card text-center">
-              <img src="${photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-100" loading="lazy" onerror="this.onerror=null; this.src='${createFallbackPhoto(m.name)}';">
+              <img src="${photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-800" loading="lazy" onerror="this.onerror=null; this.src='${createFallbackPhoto(m.name)}';">
               <div class="member-card__body">
                 <h3 class="member-name">${m.name}</h3>
                 <span class="member-role">${m.role}</span>
-                ${m.bio ? `<p class="text-slate-600 text-xs mt-2 leading-relaxed">${m.bio}</p>` : ''}
-                ${m.email ? `<a href="mailto:${m.email}" class="text-sky-600 text-xs mt-2 block hover:underline">${m.email}</a>` : ''}
+                ${m.bio ? `<p class="text-slate-300 text-xs mt-2 leading-relaxed">${m.bio}</p>` : ''}
+                ${m.email ? `<a href="mailto:${m.email}" class="text-amber-400 text-xs mt-2 block hover:underline">${m.email}</a>` : ''}
               </div>
             </div>
           `;
         }).join('');
       } catch (err) {
-        grid.innerHTML = `<p class="text-amber-600 col-span-full text-center">Unable to load members right now.</p>`;
+        grid.innerHTML = `<p class="text-amber-400 col-span-full text-center">Unable to load members right now.</p>`;
       }
     }
 
@@ -177,7 +177,7 @@
 
         if (res.ok) {
           msg.textContent = 'Member added successfully!';
-          msg.className = 'mt-3 text-center text-sm text-emerald-600 font-medium';
+          msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
           msg.classList.remove('hidden');
           document.getElementById('memberForm').reset();
           loadMembers();
@@ -186,7 +186,7 @@
         }
       } catch (err) {
         msg.textContent = 'Error adding member. Please try again.';
-        msg.className = 'mt-3 text-center text-sm text-rose-600 font-medium';
+        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
         msg.classList.remove('hidden');
       }
     });
