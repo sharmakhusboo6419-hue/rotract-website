@@ -179,6 +179,14 @@ body.site-shell main {
   text-align: center;
 }
 
+.hero-logo {
+  width: min(400px, 78%);
+  height: auto;
+  display: block;
+  margin: 0 auto 1.5rem;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.22));
+}
+
 .hero-kicker {
   display: inline-flex;
   align-items: center;
