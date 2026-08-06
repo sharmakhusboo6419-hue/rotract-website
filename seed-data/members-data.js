@@ -81,7 +81,7 @@ I am a dedicated BBA student with a strong passion for leadership, creativity, a
     name: 'Rtr. Sathwik',
     role: 'Club Treasurer',
     bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
-    photoUrl: '/images/sathwik.jpeg'
+    photoUrl: '/images/sathwik-new.jpeg'
   },
   
   
@@ -98,7 +98,7 @@ One of my greatest passions is travelling because it allows me to explore new cu
     role: 'Public Relations Director',
     bio:
       `I'm a BCA student with a curious mind and a passion for technology. I love exploring the ever-changing world of tech, where every challenge is an opportunity to learn something new. Beyond coding and innovation, I enjoy leading creative projects, transforming ideas into reality, and paying attention to the little details that make a big difference. I believe kindness, creativity, and continuous learning define who I am. My goal is to keep growing, inspire those around me, and leave a positive impact through both technology and meaningful connections.`,
-    photoUrl: '/images/sandhya-kumari.jpeg'
+    photoUrl: '/images/sandhya-new.jpeg'
   },
   {
     name: 'Rtr. Ramya',
