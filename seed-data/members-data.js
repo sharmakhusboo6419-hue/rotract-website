@@ -11,7 +11,7 @@ function escapeXml(value) {
 }
 
 function buildAvatarDataUri(name) {
-  const initials = String(name || 'RACPC')
+  const initials = String(name || 'RCPC')
     .trim()
     .split(/\s+/)
     .filter(Boolean)
@@ -21,7 +21,7 @@ function buildAvatarDataUri(name) {
     .toUpperCase() || 'R';
 
   const palette = ['d4af37', 'b8860b', '8b6914', 'c69c2e', 'e0b84b', 'a8801f', '5c4310'];
-  const hash = [...String(name || 'RACPC')].reduce((value, character) => value + character.charCodeAt(0), 0);
+  const hash = [...String(name || 'RCPC')].reduce((value, character) => value + character.charCodeAt(0), 0);
   const background = palette[hash % palette.length];
   const svg = `
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="${escapeXml(name || 'Member')}">
@@ -44,7 +44,7 @@ const teamMembers = [
    {
     name: 'Rtr. Skanda',
     role: 'President',
-    bio: 'The President is the chief executive officer of the Rotaract Club, responsible for leading the club, presiding over meetings, and representing the club in official functions. The President provides vision, direction, and leadership to ensure the club achieves its goals and fulfills its mission.',
+    bio: `Leader, passionate, kind.`,
     photoUrl: '/images/skanda.jpeg'
   },
   {
@@ -59,31 +59,27 @@ My goal is not just to achieve success for myself, but to create opportunities, 
   {
     name: 'Rtr. Dolly Gupta',
     role: 'Secretary',
-    bio:
-      `Bachelor of Business administration (BBA)
-
-I am a friendly and enthusiastic person who loves music, dancing, and travelling. I enjoy meeting new people and can easily make others feel comfortable. I believe in spreading positivity, building meaningful connections, and learning from every experience. I am a quick learner, and always ready to take on new challenges with confidence and dedication.`,
+    bio: `Friendly, compassionate, supportive.`,
     photoUrl: '/images/dolly-gupta.jpeg'
   },
   {
     name: 'Rtr. Deepak Kumar Barik',
     role: 'Operation Secretary',
-    bio: `Bachelor of Business Administration (BBA)
-I am a dedicated BBA student with a strong passion for leadership, creativity, and continuous learning. I take pride in organizing events, leading teams, and creating impactful digital content that connects with people. Through my active involvement in the Rotaract Club and various college initiatives, I have developed skills in communication, teamwork, event management, and public relations.`,
+    bio: `Creative, strategic thinker.`,
       
     photoUrl: '/images/deepak-kumar-barik.jpeg'
   },
   {
     name: 'Rtr. Patan Anif',
     role: 'Sergeant-At-Arms',
-    bio: 'The Sergeant-at-Arms is responsible for maintaining order and decorum during club meetings and events. This role involves ensuring that meetings run smoothly, enforcing rules and procedures, and assisting with the setup and organization of events.',
+    bio: `Discipline, leadership, integrity.`,
     photoUrl: '/images/patan-anif.jpeg',
   },
   
   {
     name: 'Rtr. Sathwik',
     role: 'Club Treasurer',
-    bio: `I'm Emmadi Sathwik, currently pursuing BBA finance and my proudest achievement isn't any award or competition, it's choosing, every single day, to become a kinder person than I was yesterday. I've learned that true strength isn't in never failing, it's in having the courage to rise, take responsibility, and keep choosing "Hope". I don't want to be remembered for what I've accomplished, I want my life to become one more reason someone chooses to believe in humanity, finds hope when the world gives them none, and discovers that kindness still has the power to change lives.`,
+    bio: `Hope, justice, purpose.`,
     photoUrl: '/images/sathwik-new.jpeg'
   },
   
@@ -99,16 +95,33 @@ One of my greatest passions is travelling because it allows me to explore new cu
   {
     name: 'Rtr. Sandhya Kumari',
     role: 'Public Relations Director',
-    bio:
-      `I'm a BCA student with a curious mind and a passion for technology. I love exploring the ever-changing world of tech, where every challenge is an opportunity to learn something new. Beyond coding and innovation, I enjoy leading creative projects, transforming ideas into reality, and paying attention to the little details that make a big difference. I believe kindness, creativity, and continuous learning define who I am. My goal is to keep growing, inspire those around me, and leave a positive impact through both technology and meaningful connections.`,
+    bio: `Funny, ambitious, supportive.`,
     photoUrl: '/images/sandhya-new.jpeg'
   },
   {
     name: 'Rtr. Ramya',
     role: 'Public Relations Director',
-    bio:`I am currently pursuing BCA
-I am a hardworking and determined person who always tries to learn and improve. I believe that every challenge is an opportunity to grow. I am kind, respectful, and supportive of the people around me. I take responsibility for my work and never give up easily. I am proud of my willingness to keep moving forward, learn from my mistakes, and become a better version of myself every day.`,
+    bio: `Confident, positive, brave.`,
     photoUrl: '/images/ramya.jpeg'
+  },
+  
+  {
+    name: 'Rtr. Dithipriya Dutta',
+    role: 'Public Relational Director',
+    bio: `Calm, confident, observant.`,
+    photoUrl: '/images/dithi-priya.jpeg',
+  },
+  {
+    name: 'Rtr. Kaneez Fatima',
+    role: 'Club Service Director',
+    bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
+    photoUrl: '/images/kaneez-fatima.jpeg',
+  },
+  {
+    name: 'Rtr. Hamid Ashraf',
+    role: 'Club Service Director',
+    bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
+    photoUrl: '/images/hamid-ashraf.jpeg'
   },
   {
     name: 'Rtr. Khusboo Sharma',
@@ -120,43 +133,25 @@ I am a hardworking and determined person who always tries to learn and improve. 
   {
     name: 'Rtr. Iman Shariff',
     role: 'Cultural Event Director',
-    bio: `I am Iman Shariff, a passionate individual with a strong interest in cultural events and community engagement. I believe in the power of unity and strive to create inclusive environments where everyone feels valued and heard. My goal is to contribute to the growth and development of our Rotaract Club by organizing meaningful events that bring people together and foster positive change.`,
+    bio: `Introvert, shy, under confident.`,
     photoUrl: '/images/iman-shariff.jpeg'
   },
   {
     name: 'Rtr. Vani Ray',
     role: 'Director of Events',
-    bio: `Bachelors of business administration ( BBA) 
-One thing I’m truly proud of is my ability to connect with people and create positive vibe wherever I go. I am someone who loves being pro active on social media and connect with others .
-I love dancing, swimming, and travelling because each of these activities teaches me  confidence, discipline, adaptability, and the joy of exploring new perspectives.`,
+    bio: `Vibrant, goofy, expressive.`,
     photoUrl: '/images/vani-ray.jpeg',
   },
   {
     name: 'Rtr. Aditya Raj',
     role: 'Director of Events',
-    bio: `I’m currently pursuing BCA (Bachelor of Computer Application).
-One quality I am truly proud of is my ability to connect with people and make them feel comfortable. I have a friendly and approachable personality, which helps me build meaningful relationships with people from different backgrounds. I enjoy meeting new people, listening to their perspectives, and learning from their experiences.
-
-I also have a curious mindset and love exploring new ideas. Whether it is taking on a new challenge, learning a new skill, or finding creative solutions to problems, I always look for opportunities to grow. I believe that every new experience teaches us something valuable and helps us become a better version of ourselves.`,
+    bio: `Extrovert, adaptable, empathetic.`,
     photoUrl: '/images/aditya-raj.jpeg',
-  },
-   {
-    name: 'Rtr. Hamid Ashraf',
-    role: 'Club Service Director',
-    bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
-    photoUrl: '/images/hamid-ashraf.jpeg'
-  },
-
-  {
-    name: 'Rtr. Kaneez Fatima',
-    role: 'Club Service Director',
-    bio: 'The club service director is responsible for overseeing the club\'s internal operations, ensuring that meetings, events, and activities run smoothly and efficiently.',
-    photoUrl: '/images/kaneez-fatima.jpeg',
   },
   {
     name: 'Rtr. Adithyian Vinod',
     role: 'Community Service Director',
-    bio: `I am currently pursuing a Bachelor of Commerce (B.Com.) in Banking and Finance. I am passionate about developing my leadership skills and enjoy taking responsibility in team activities. One thing I am proud of is my ability to lead and work well with others while creating a positive and supportive environment.
+    bio: `Leadership-oriented, straightforward, and loyal.
 
 Apart from academics, I enjoy spending quality time with my friends, exploring new places, and hanging out. I believe that strong relationships, teamwork, and continuous learning help me grow both personally and professionally.`,
     photoUrl: '/images/adithyian-vinod.png'
@@ -199,13 +194,6 @@ One thing I am proud of is my dedication to continuous learning and self-improve
 
 const membersList = [
  
-  
-  {
-    name: 'Rtr. Dithipriya Dutta',
-    role: 'Public Relational Director',
-    bio: 'The Public Relations Director is responsible for managing the club\'s image, promoting its activities, and maintaining communication with members, the public, and the media. This role involves creating marketing materials, managing social media accounts, and fostering positive relationships with stakeholders.',
-    photoUrl: '/images/dithi-priya.jpeg',
-  },
   
   
 ].map((member) => ({ ...member, category: MEMBER_CATEGORIES.MEMBER }));
