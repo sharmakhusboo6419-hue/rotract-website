@@ -117,7 +117,12 @@ I am a hardworking and determined person who always tries to learn and improve. 
       `A BCA (Data Science) student at Presidency College in Bengaluru with a strong interest in software development, web technologies, artificial intelligence, and data science.I enjoy learning by building real-world projects such as an Emergency Triage System, an AI Resume Analyzer, and a personal portfolio website, while continuously improving my skills in HTML, CSS, JavaScript, Python, SQL, and Linux. Alongside my technical interests, I actively participate in my college's Rotaract Club, contributing to event planning, public speaking, and leadership activities. I am focused on gaining practical experience through internships, strengthening my portfolio, and preparing for a successful career in the tech industry.`,
     photoUrl: '/images/khusboo-sharma.jpeg'
   },
-
+  {
+    name: 'Rtr. Iman Shariff',
+    role: 'Cultural Event Director',
+    bio: `I am Iman Shariff, a passionate individual with a strong interest in cultural events and community engagement. I believe in the power of unity and strive to create inclusive environments where everyone feels valued and heard. My goal is to contribute to the growth and development of our Rotaract Club by organizing meaningful events that bring people together and foster positive change.`,
+    photoUrl: '/images/iman-shariff.jpeg'
+  },
   {
     name: 'Rtr. Vani Ray',
     role: 'Director of Events',
@@ -184,6 +189,12 @@ One thing I am proud of is my dedication to continuous learning and self-improve
     bio: 'I’m currently pursuing bca (so and ml).One thing I am truly proud of is stepping out of my comfort zone and embracing every opportunity to learn and grow. Whether it was participating in college events, presenting research papers, taking on leadership roles, or hosting events as an MC, each experience has helped me build confidence, strengthen my teamwork and communication skills, and develop a mindset of continuous learning. These experiences have shaped me into someone who is always ready to take on new challenges and make a positive impact.',
     photoUrl: '/images/noor-hoorain.jpeg',
   },
+  {
+    name: 'Rtr. Syed Mohd Zayeed',
+    role: 'Professional Development Director',
+    bio: `My name is Syed Mohammed Zaid currently pursuing BCA (AI and ML). One thing I am truly proud of is my ability to balance my passions with personal growth. Whether it's exploring the latest in technology, enjoying gaming sessions, jamming to music with friends, or learning more about bikes and cars, I always strive to make the most of every experience. These interests have taught me creativity, teamwork, problem-solving, and the value of staying curious. I believe that every hobby and every new challenge helps shape me into a more confident, adaptable, and well-rounded individual.`,
+    photoUrl: '/images/syed-zayeed.jpeg'
+  }
 ].map((member) => ({ ...member, category: MEMBER_CATEGORIES.LEADERSHIP }));
 
 const membersList = [
