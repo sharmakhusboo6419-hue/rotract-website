@@ -612,3 +612,233 @@ body.site-shell main {
     padding: 1.35rem;
   }
 }
+
+/* ============================================================
+   DESIGN ENHANCEMENTS (index inner pages)
+   ============================================================ */
+
+/* Gold gradient text */
+.gold-text {
+  background: linear-gradient(135deg, #ffd700 0%, #d4af37 60%, #b8860b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hero prominence (home) */
+.hero-shell {
+  position: relative;
+}
+.hero-shell::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10%;
+  background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.22), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-shell > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Inner page hero banner */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(3rem, 7vw, 5.5rem) 0;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% -12%, rgba(212, 175, 55, 0.3), transparent 55%),
+    linear-gradient(180deg, #15140f 0%, #0c0c0c 100%);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.35);
+}
+.page-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(212, 175, 55, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(circle at 50% 0%, #000, transparent 72%);
+  pointer-events: none;
+}
+.page-hero > * {
+  position: relative;
+  z-index: 1;
+}
+.page-hero kbd,
+.page-hero .hero-kicker {
+  margin-bottom: 0.25rem;
+}
+.page-hero__title {
+  margin: 1rem auto 0;
+  max-width: 18ch;
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+.page-hero__copy {
+  margin: 1rem auto 0;
+  max-width: 46rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.page-hero .hero-actions {
+  margin-top: 1.75rem;
+}
+
+/* Impact stats band (home & about) */
+.home-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  background: var(--line);
+  box-shadow: var(--shadow);
+}
+.stat-cell {
+  padding: 1.75rem 1rem;
+  text-align: center;
+  background: #101010;
+}
+.stat-value {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stat-label {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.stat-icon {
+  font-size: 1.4rem;
+  display: block;
+  margin-bottom: 0.4rem;
+}
+
+/* Project cards (home) */
+.home-project-card {
+  position: relative;
+  overflow: hidden;
+  padding: 1.6rem;
+  border-radius: 1.35rem;
+  background: rgba(24, 24, 24, 0.88);
+  border: 1px solid var(--line);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.4);
+  transition: transform 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+}
+.home-project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #ffd700, #b8860b);
+}
+.home-project-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.4);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55);
+}
+.home-project-card .project-icon {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.12));
+  box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.35);
+  font-size: 1.3rem;
+}
+
+/* Benefit tiles */
+.benefit-tile {
+  padding: 1.6rem;
+  border-radius: 1.35rem;
+  background: rgba(24, 24, 24, 0.88);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.35);
+  transition: transform 200ms ease, border-color 200ms ease;
+}
+.benefit-tile:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+.benefit-tile .benefit-icon {
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(212, 175, 55, 0.14));
+  box-shadow: inset 0 0 0 1px rgba(212, 175, 55, 0.3);
+  font-size: 1.3rem;
+}
+
+/* Final call-to-action banner */
+.cta-band {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 2rem;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 5vw, 3.5rem);
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.22), transparent 60%),
+    linear-gradient(180deg, #15140f, #0c0c0c);
+  box-shadow: var(--shadow);
+}
+.cta-band__title {
+  font-size: clamp(1.9rem, 4.5vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+.cta-band__copy {
+  margin: 0.9rem auto 0;
+  max-width: 40rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.cta-band .cta-actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem;
+}
+
+/* Two-column layout (join / contact) */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 2rem;
+  align-items: start;
+}
+.split-side .info-card {
+  margin-bottom: 1rem;
+}
+@media (max-width: 900px) {
+  .split {
+    grid-template-columns: 1fr;
+  }
+  .home-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

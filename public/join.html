@@ -32,50 +32,80 @@
 
   <!-- Main Content -->
   <main class="page-section page-shell flex-grow w-full">
-    <div class="form-card">
-      
-      <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-amber-400 mb-2">Membership Application</h1>
-        <p class="text-slate-300">Join the Rotaract Club of <span class="presidency-word">Presidency</span> College and grow with a vibrant team of change-makers and young leaders.</p>
+    <div class="split">
+      <div class="split-side">
+        <div class="text-center mb-8 sm:text-left">
+          <span class="section-badge">Why Join Us</span>
+          <h1 class="text-3xl font-bold text-amber-400 mt-3 mb-2">Grow With a Team of Change-Makers</h1>
+          <p class="text-slate-300">Becoming a member of RCPC unlocks opportunities to lead, serve, and grow alongside young leaders from across Bengaluru and the world.</p>
+        </div>
+        <div class="benefit-tile">
+          <div class="benefit-icon">🌟</div>
+          <h3 class="font-bold mb-1">Real Leadership</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Own service projects, campaigns, and events that have a tangible community impact.</p>
+        </div>
+        <div class="benefit-tile">
+          <div class="benefit-icon">🎓</div>
+          <h3 class="font-bold mb-1">Skills & Growth</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Practice public speaking, teamwork, event management, and professional networking.</p>
+        </div>
+        <div class="benefit-tile">
+          <div class="benefit-icon">🌏</div>
+          <h3 class="font-bold mb-1">Global Network</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Connect with Rotaract clubs around the world and attend district events and conferences.</p>
+        </div>
+        <div class="benefit-tile">
+          <div class="benefit-icon">🤝</div>
+          <h3 class="font-bold mb-1">Lifelong Friendships</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">Join a warm, fellowship-driven community that celebrates every milestone together.</p>
+        </div>
       </div>
 
-      <form id="joinForm" class="space-y-5">
-        <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Full Name</label>
-          <input type="text" id="fullName" required class="form-control">
+      <div class="form-card">
+        
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-amber-400 mb-2">Membership Application</h2>
+          <p class="text-slate-300">Join the Rotaract Club of <span class="presidency-word">Presidency</span> College and grow with a vibrant team of change-makers and young leaders.</p>
         </div>
 
-        <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Email Address</label>
-          <input type="email" id="email" required class="form-control">
-        </div>
+        <form id="joinForm" class="space-y-5">
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Full Name</label>
+            <input type="text" id="fullName" required class="form-control">
+          </div>
 
-        <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Phone Number</label>
-          <input type="tel" id="phone" required class="form-control">
-        </div>
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Email Address</label>
+            <input type="email" id="email" required class="form-control">
+          </div>
 
-        <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Primary Area of Interest</label>
-          <select id="interest" class="form-control">
-            <option>Community Service Projects</option>
-            <option>Professional Development Workshops</option>
-            <option>Club Operations & Event Planning</option>
-            <option>Public Relations & Marketing</option>
-          </select>
-        </div>
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Phone Number</label>
+            <input type="tel" id="phone" required class="form-control">
+          </div>
 
-        <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Why do you want to join Rotaract?</label>
-          <textarea id="reason" rows="4" required class="form-control"></textarea>
-        </div>
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Primary Area of Interest</label>
+            <select id="interest" class="form-control">
+              <option>Community Service Projects</option>
+              <option>Professional Development Workshops</option>
+              <option>Club Operations & Event Planning</option>
+              <option>Public Relations & Marketing</option>
+            </select>
+          </div>
 
-        <button type="submit" id="submitBtn" class="primary-button" style="width: 100%;">
-          Submit Application
-        </button>
-      </form>
-      
-      <p id="joinResponseMsg" class="status-message text-center font-medium hidden"></p>
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Why do you want to join Rotaract?</label>
+            <textarea id="reason" rows="4" required class="form-control"></textarea>
+          </div>
+
+          <button type="submit" id="submitBtn" class="primary-button" style="width: 100%;">
+            Submit Application
+          </button>
+        </form>
+        
+        <p id="joinResponseMsg" class="status-message text-center font-medium hidden"></p>
+      </div>
     </div>
   </main>
 

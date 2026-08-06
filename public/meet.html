@@ -24,16 +24,19 @@
     </nav>
   </header>
 
-  <main class="page-section page-shell flex-grow w-full">
-    <div class="section-heading">
-      <span class="section-badge">Meet Us</span>
-      <h1 class="section-title">Our Faculty & Team</h1>
-      <p class="section-subtitle">
-        The guiding members of the Rotaract Club of <span class="presidency-word">Presidency</span> College.
-      </p>
-    </div>
+  <main class="flex-grow">
+    <section class="page-hero">
+      <div class="page-shell">
+        <span class="hero-kicker">Meet Us</span>
+        <h1 class="page-hero__title gold-text">Our Faculty & Team</h1>
+        <p class="page-hero__copy">
+          The guiding members of the Rotaract Club of <span class="presidency-word">Presidency</span> College — mentors, leaders, and change-makers driving our community forward.
+        </p>
+      </div>
+    </section>
 
-    <section class="mb-16">
+    <section class="page-section page-shell">
+    <div class="mb-16">
       <div class="section-heading">
         <span class="section-badge">Faculty</span>
         <h2 class="section-title">Faculty & Head of Rotaract</h2>
@@ -41,9 +44,9 @@
       <div id="facultyGrid" class="member-grid">
         <p class="text-slate-500 col-span-full text-center">Loading faculty...</p>
       </div>
-    </section>
+    </div>
 
-    <section class="mb-16">
+    <div class="mb-16">
       <div class="section-heading">
         <span class="section-badge">Our Team</span>
         <h2 class="section-title">Meet Our Members</h2>
@@ -51,7 +54,7 @@
       <div id="membersGrid" class="member-grid">
         <p class="text-slate-500 col-span-full text-center">Loading members...</p>
       </div>
-    </section>
+    </div>
 
     <div class="form-card" style="max-width: 42rem; margin-inline: auto;">
       <h2 class="text-2xl font-bold text-slate-100 mb-4 text-center">Add New Member</h2>
@@ -93,6 +96,7 @@
       </form>
       <p id="memberMsg" class="status-message text-center text-sm hidden"></p>
     </div>
+    </section>
   </main>
 
   <footer class="site-footer py-6 text-center text-sm border-t border-amber-500/30">

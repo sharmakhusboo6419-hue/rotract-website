@@ -25,41 +25,76 @@
   </header>
 
   <main class="page-section page-shell flex-grow w-full">
-    <div class="form-card" style="max-width: 42rem; margin-inline: auto;">
-      <div class="text-center mb-8">
-        <span class="section-badge">Collaborate With Us</span>
-        <h1 class="text-3xl font-bold text-amber-400 mb-2">Get in Touch</h1>
-        <p class="text-slate-300">We’d love to hear from individuals, organizations, and partners who want to collaborate with RCPC.</p>
+    <div class="split" style="display: grid; max-width: 1000px; margin-inline: auto;">
+      <div class="split-side">
+        <div class="text-center mb-8 sm:text-left">
+          <span class="section-badge">Collaborate With Us</span>
+          <h1 class="text-3xl font-bold text-amber-400 mt-3 mb-2">Get in Touch</h1>
+          <p class="text-slate-300">We’d love to hear from individuals, organizations, and partners who want to collaborate with RCPC.</p>
+        </div>
+
+        <div class="info-card">
+          <div class="flex items-start gap-3 mb-2">
+            <div class="benefit-icon">📧</div>
+            <div>
+              <h3 class="font-bold text-slate-100">Email Us</h3>
+              <p class="text-sm text-slate-400">For general queries, sponsorships, and partnerships.</p>
+              <a href="mailto:racpc.presidency@gmail.com" class="text-amber-400 underline break-all"><span class="presidency-word">racpc.presidency</span>@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="flex items-start gap-3">
+            <div class="benefit-icon">📍</div>
+            <div>
+              <h3 class="font-bold text-slate-100">Find Us</h3>
+              <p class="text-sm text-slate-400">Rotaract Club of <span class="presidency-word">Presidency</span> College, Bengaluru, Rotaract District 3192.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-card">
+          <div class="flex items-start gap-3">
+            <div class="benefit-icon">🤝</div>
+            <div>
+              <h3 class="font-bold text-slate-100">Let’s Work Together</h3>
+              <p class="text-sm text-slate-400">Events, outreach, community service, sponsorships, and student engagement.</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="rounded-2xl border border-amber-500/20 bg-slate-800 p-4 mb-6 text-sm text-amber-100">
-        <p class="mb-2"><strong>Email:</strong> <a href="mailto:racpc.presidency@gmail.com" class="text-amber-400 underline"><span class="presidency-word">racpc.presidency</span>@gmail.com</a></p>
-        <p><strong>Let’s work together on:</strong> events, outreach, community service, sponsorships, and student engagement.</p>
+      <div class="form-card">
+        <div class="text-center mb-8">
+          <h2 class="text-3xl font-bold text-amber-400 mb-2">Send a Message</h2>
+          <p class="text-slate-300">Tell us how you'd like to collaborate — we usually respond within a few days.</p>
+        </div>
+
+        <form action="mailto:racpc.presidency@gmail.com" method="post" enctype="text/plain" class="space-y-5">
+          <div class="form-field">
+            <label class="block text-sm font-medium text-amber-100">Your Name</label>
+            <input type="text" name="name" required class="form-control">
+          </div>
+
+          <div class="form-field">
+            <label class="block text-sm font-medium text-amber-100">Email Address</label>
+            <input type="email" name="email" required class="form-control">
+          </div>
+
+          <div class="form-field">
+            <label class="block text-sm font-medium text-amber-100">Organization / Institution</label>
+            <input type="text" name="organization" class="form-control">
+          </div>
+
+          <div class="form-field">
+            <label class="block text-sm font-medium text-amber-100">How would you like to collaborate?</label>
+            <textarea name="message" rows="5" required class="form-control"></textarea>
+          </div>
+
+          <button type="submit" class="primary-button" style="width: 100%;">Send Message</button>
+        </form>
       </div>
-
-      <form action="mailto:racpc.presidency@gmail.com" method="post" enctype="text/plain" class="space-y-5">
-        <div class="form-field">
-          <label class="block text-sm font-medium text-amber-100">Your Name</label>
-          <input type="text" name="name" required class="form-control">
-        </div>
-
-        <div class="form-field">
-          <label class="block text-sm font-medium text-amber-100">Email Address</label>
-          <input type="email" name="email" required class="form-control">
-        </div>
-
-        <div class="form-field">
-          <label class="block text-sm font-medium text-amber-100">Organization / Institution</label>
-          <input type="text" name="organization" class="form-control">
-        </div>
-
-        <div class="form-field">
-          <label class="block text-sm font-medium text-amber-100">How would you like to collaborate?</label>
-          <textarea name="message" rows="5" required class="form-control"></textarea>
-        </div>
-
-        <button type="submit" class="primary-button" style="width: 100%;">Send Message</button>
-      </form>
     </div>
   </main>
 
