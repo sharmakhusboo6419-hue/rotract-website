@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotaract Club - Our Team</title>
+  <title>Rotaract Club - Meet Us</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -12,16 +12,15 @@
   <header class="site-header">
     <nav>
       <a href="index.html" class="flex items-center gap-3 group">
-        <div class="bg-black/40 p-1.5 rounded-lg shadow-sm group-hover:bg-white transition">
+        <div class="bg-black/40 p-1.5 rounded-lg shadow-sm group-hover:bg-white/10 transition">
           <img src="images/site-logo.png" alt="Club Logo" class="h-10 w-auto object-contain">
         </div>
-        <span class="text-xl font-bold tracking-wide">RACPC</span>
+        <span class="text-xl font-bold tracking-wide">RCPC</span>
       </a>
       <div class="space-x-6 text-sm sm:text-base font-medium">
         <a href="index.html" class="hover:underline">Home</a>
         <a href="about.html" class="hover:underline">About</a>
-        <a href="members.html" class="font-semibold underline">Members</a>
-        <a href="faculty.html" class="hover:underline">Faculty</a>
+        <a href="meet.html" class="font-semibold underline">Meet Us</a>
         <a href="join.html" class="hover:underline">Join Us</a>
         <a href="contact.html" class="hover:underline">Contact</a>
       </div>
@@ -34,48 +33,64 @@
 
   <main class="page-section page-shell flex-grow w-full">
     <div class="section-heading">
-      <span class="section-badge">Our Team</span>
-      <h1 class="section-title">Meet Our Team</h1>
+      <span class="section-badge">Meet Us</span>
+      <h1 class="section-title">Our Faculty & Team</h1>
       <p class="section-subtitle">
-        The dedicated leaders and passionate members driving positive impact in the Rotaract Club of <span class="presidency-word">Presidency</span> College.
+        The guiding members of the Rotaract Club of <span class="presidency-word">Presidency</span> College.
       </p>
     </div>
 
-    <div id="membersGrid" class="member-grid mb-16">
-      <p class="text-slate-400 col-span-full text-center">Loading members...</p>
-    </div>
+    <section class="mb-16">
+      <div class="section-heading">
+        <span class="section-badge">Faculty</span>
+        <h2 class="section-title">Faculty & Head of Rotaract</h2>
+      </div>
+      <div id="facultyGrid" class="member-grid">
+        <p class="text-slate-500 col-span-full text-center">Loading faculty...</p>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <div class="section-heading">
+        <span class="section-badge">Our Team</span>
+        <h2 class="section-title">Meet Our Members</h2>
+      </div>
+      <div id="membersGrid" class="member-grid">
+        <p class="text-slate-500 col-span-full text-center">Loading members...</p>
+      </div>
+    </section>
 
     <div class="form-card" style="max-width: 42rem; margin-inline: auto;">
       <h2 class="text-2xl font-bold text-slate-100 mb-4 text-center">Add New Member</h2>
-      
+
       <form id="memberForm" class="space-y-4">
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Full Name</label>
+          <label class="block text-sm font-medium text-amber-100">Full Name</label>
           <input type="text" id="memberName" required class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Role / Position</label>
+          <label class="block text-sm font-medium text-amber-100">Role / Position</label>
           <input type="text" id="memberRole" placeholder="e.g. President, Secretary" required class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Photo URL</label>
+          <label class="block text-sm font-medium text-amber-100">Photo URL</label>
           <input type="url" id="memberPhoto" placeholder="https://images.unsplash.com/photo-..." required class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Email Address</label>
+          <label class="block text-sm font-medium text-amber-100">Email Address</label>
           <input type="email" id="memberEmail" class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Year</label>
+          <label class="block text-sm font-medium text-amber-100">Year</label>
           <input type="text" id="memberYear" placeholder="e.g. 2024-25" class="form-control">
         </div>
 
         <div class="form-field">
-          <label class="block text-sm font-medium text-slate-200">Short Bio</label>
+          <label class="block text-sm font-medium text-amber-100">Short Bio</label>
           <textarea id="memberBio" rows="3" placeholder="Brief introduction..." class="form-control"></textarea>
         </div>
 
@@ -92,9 +107,10 @@
   </footer>
 
   <script>
-    const API_URL = '/api/members';
+    const MEMBERS_API = '/api/members';
+    const FACULTY_API = '/api/faculty';
 
-    function createFallbackPhoto(name) {
+    function createFallbackPhoto(name, fallbackLetter = 'M') {
       const initials = String(name || 'Member')
         .trim()
         .split(/\s+/)
@@ -102,7 +118,7 @@
         .slice(0, 2)
         .map(part => part[0])
         .join('')
-        .toUpperCase() || 'M';
+        .toUpperCase() || fallbackLetter;
 
       const colors = ['d4af37', 'b8860b', '8b6914', 'c69c2e', 'e0b84b', 'a8801f', '5c4310'];
       const hash = [...String(name || 'Member')].reduce((value, character) => value + character.charCodeAt(0), 0);
@@ -123,34 +139,52 @@
       `.replace(/\s{2,}/g, ' ').trim())}`;
     }
 
+    function renderGrid(container, items, { onEmpty }) {
+      if (!items || items.length === 0) {
+        container.innerHTML = `<p class="text-slate-500 col-span-full text-center">${onEmpty}</p>`;
+        return;
+      }
+      container.innerHTML = items.map(m => {
+        const photoUrl = (m.photoUrl && typeof m.photoUrl === 'string' && m.photoUrl.trim())
+          ? m.photoUrl
+          : createFallbackPhoto(m.name, m.name ? m.name[0] : 'M');
+
+        const extra = m.department
+          ? `<p class="text-amber-200 text-sm mt-2 font-semibold">${m.department}</p>`
+          : '';
+
+        return `
+          <div class="member-card text-center">
+            <img src="${photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-800" loading="lazy" onerror="this.onerror=null; this.src='${createFallbackPhoto(m.name)}';">
+            <div class="member-card__body">
+              <h3 class="member-name">${m.name}</h3>
+              <span class="member-role">${m.role}</span>
+              ${extra}
+              ${m.email ? `<a href="mailto:${m.email}" class="text-amber-400 text-xs mt-2 block hover:underline">${m.email}</a>` : ''}
+              ${m.bio ? `<p class="text-slate-300 text-xs mt-2 leading-relaxed">${m.bio}</p>` : ''}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function loadFaculty() {
+      const grid = document.getElementById('facultyGrid');
+      try {
+        const res = await fetch(FACULTY_API);
+        const faculty = await res.json();
+        renderGrid(grid, faculty, { onEmpty: 'No faculty added yet.' });
+      } catch (err) {
+        grid.innerHTML = `<p class="text-amber-400 col-span-full text-center">Unable to load faculty right now.</p>`;
+      }
+    }
+
     async function loadMembers() {
       const grid = document.getElementById('membersGrid');
       try {
-        const res = await fetch(API_URL);
+        const res = await fetch(MEMBERS_API);
         const members = await res.json();
-
-        if (!members || members.length === 0) {
-          grid.innerHTML = `<p class="text-slate-400 col-span-full text-center">No members added yet. Use the form below to add members!</p>`;
-          return;
-        }
-
-        grid.innerHTML = members.map(m => {
-          const photoUrl = (m.photoUrl && typeof m.photoUrl === 'string' && m.photoUrl.trim())
-            ? m.photoUrl
-            : createFallbackPhoto(m.name);
-
-          return `
-            <div class="member-card text-center">
-              <img src="${photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-800" loading="lazy" onerror="this.onerror=null; this.src='${createFallbackPhoto(m.name)}';">
-              <div class="member-card__body">
-                <h3 class="member-name">${m.name}</h3>
-                <span class="member-role">${m.role}</span>
-                ${m.bio ? `<p class="text-slate-300 text-xs mt-2 leading-relaxed">${m.bio}</p>` : ''}
-                ${m.email ? `<a href="mailto:${m.email}" class="text-amber-400 text-xs mt-2 block hover:underline">${m.email}</a>` : ''}
-              </div>
-            </div>
-          `;
-        }).join('');
+        renderGrid(grid, members, { onEmpty: 'No members added yet. Use the form below to add members!' });
       } catch (err) {
         grid.innerHTML = `<p class="text-amber-400 col-span-full text-center">Unable to load members right now.</p>`;
       }
@@ -170,7 +204,7 @@
       };
 
       try {
-        const res = await fetch(API_URL, {
+        const res = await fetch(MEMBERS_API, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -192,6 +226,7 @@
       }
     });
 
+    loadFaculty();
     loadMembers();
   </script>
 </body>
