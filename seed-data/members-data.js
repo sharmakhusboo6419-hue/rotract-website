@@ -50,7 +50,10 @@ const teamMembers = [
   {
     name: 'Rtr. Avnish Kumar',
     role: 'Vice-President',
-    bio: 'The Vice-President assists the President in leading the Rotaract Club and may take on additional responsibilities as needed.',
+    bio: `I'm Avnish Kumar, currently pursuing my Bachelor of Business Administration (BBA) at Presidency College, Bangalore. I have the privilege of serving as the Vice President of the Rotaract Club of Presidency College.
+I believe that leadership is not about holding a position—it's about taking responsibility, serving others, and inspiring people through actions. I enjoy organizing events, managing teams, and building meaningful connections with people. Every challenge I take on teaches me something new and helps me grow as both a leader and an individual.
+Beyond academics, I am passionate about social service, event management, travelling, writing, and long-distance bike rides. I strive to remain disciplined, dependable, and committed in everything I do.
+My goal is not just to achieve success for myself, but to create opportunities, bring people together, and leave a positive impact wherever I go. I want to be remembered as someone who led with humility, worked with dedication, and made a difference in the lives of others.`,
     photoUrl: '/images/avnish-kumar-2026.jpeg'
   },
   {
@@ -80,7 +83,7 @@ I am a dedicated BBA student with a strong passion for leadership, creativity, a
   {
     name: 'Rtr. Sathwik',
     role: 'Club Treasurer',
-    bio: 'The Club Treasurer is responsible for managing the club\'s finances, including budgeting, accounting, and ensuring financial transparency.',
+    bio: `I'm Emmadi Sathwik, currently pursuing BBA finance and my proudest achievement isn't any award or competition, it's choosing, every single day, to become a kinder person than I was yesterday. I've learned that true strength isn't in never failing, it's in having the courage to rise, take responsibility, and keep choosing "Hope". I don't want to be remembered for what I've accomplished, I want my life to become one more reason someone chooses to believe in humanity, finds hope when the world gives them none, and discovers that kindness still has the power to change lives.`,
     photoUrl: '/images/sathwik-new.jpeg'
   },
   
@@ -111,7 +114,7 @@ I am a hardworking and determined person who always tries to learn and improve. 
     name: 'Rtr. Khusboo Sharma',
     role: 'Cultural Event Director',
     bio:
-      'The Cultural Event Director in  Rotaract Club is responsible for planning and managing all cultural and entertainment activities that strengthen fellowship, celebrate diversity, and encourage member participation. While each club may define director roles differently, Rotaract clubs commonly assign directors to lead specific areas and organize activities aligned with the club\'s annual goals.',
+      `A BCA (Data Science) student at Presidency College in Bengaluru with a strong interest in software development, web technologies, artificial intelligence, and data science.I enjoy learning by building real-world projects such as an Emergency Triage System, an AI Resume Analyzer, and a personal portfolio website, while continuously improving my skills in HTML, CSS, JavaScript, Python, SQL, and Linux. Alongside my technical interests, I actively participate in my college's Rotaract Club, contributing to event planning, public speaking, and leadership activities. I am focused on gaining practical experience through internships, strengthening my portfolio, and preparing for a successful career in the tech industry.`,
     photoUrl: '/images/khusboo-sharma.jpeg'
   },
 
@@ -162,7 +165,9 @@ Apart from academics, I enjoy spending quality time with my friends, exploring n
   {
     name: 'Rtr. Dhanush',
     role: 'International Service Director',
-    bio: 'A dedicated member of the Rotaract Club, contributing to various initiatives and activities.',
+    bio: `I am Dhanush, currently pursuing a Bachelor of Commerce (B.Com.) in Banking and Finance. I am passionate about developing my leadership skills and enjoy taking responsibility in team activities. One thing I am proud of is my ability to lead and work well with others while creating a positive and supportive environment.
+
+Apart from academics, I enjoy spending quality time with my friends, exploring new places, and hanging out. I believe that strong relationships, teamwork, and continuous learning help me grow both personally and professionally.`,
     photoUrl: '/images/dhanush.jpeg'
   },
   {

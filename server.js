@@ -9,6 +9,7 @@ const cors = require('cors');
 const Project = require('./models/Project.js');
 const Member = require('./models/Member.js');
 const { teamMembers, membersList } = require('./seed-data/members-data');
+const { facultyList } = require('./seed-data/faculty-data');
 
 const teamMemberSchema = new mongoose.Schema(
   {
@@ -169,6 +170,15 @@ app.post('/api/members', async (req, res) => {
   } catch (error) {
     console.error('Error saving member:', error);
     res.status(500).json({ error: 'Failed to save member' });
+  }
+});
+
+app.get('/api/faculty', (req, res) => {
+  try {
+    res.json(facultyList);
+  } catch (error) {
+    console.error('Error fetching faculty:', error);
+    res.status(500).json({ error: 'Failed to retrieve faculty' });
   }
 });
 
