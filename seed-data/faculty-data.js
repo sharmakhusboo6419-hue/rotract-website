@@ -1,30 +1,30 @@
 const FACULTY_ROLES = {
-  HOD: 'hod',
-  HEAD_OF_ROTARACT: 'head-of-rotaract',
+  FACULTY_COORDINATOR: 'faculty-coordinator',
   FACULTY: 'faculty'
 };
 
 const facultyList = [
   {
     name: 'Ms. Noreen Alexeena Datta',
-    role: 'HOD',
+    role: 'Faculty Coordinator',
     department: 'Political Science',
-    bio: 'Specialization in Political Science',
+    bio: 'The Head of our Rotaract Club of Presidency College.',
     photoUrl: '/images/noreen-datta.jpeg',
-    category: FACULTY_ROLES.HOD
+    category: FACULTY_ROLES.FACULTY_COORDINATOR
   },
   {
     name: 'Ms. Poojashree C',
-    role: 'Assistant Professor',
-    department: 'Finance & Taxation',
-    bio: 'Specialization in Finance & Taxation',
+    role: 'Faculty Coordinator',
+    department: 'BBA & BCom',
+    bio: "The Faculty Coordinator for the BBA and BCom Departments. Your guidance, encouragement, and positive attitude inspire students to achieve their best. Your commitment and care have played an important role in the success of our club activities.",
     photoUrl: '/images/poojashree-c.jpeg',
     category: FACULTY_ROLES.FACULTY
   },
   {
     name: 'Ms. P. Uma Mageswari',
-    role: 'Assistant Professor',
-    bio: 'Assistant Professor',
+    role: 'Faculty Coordinator',
+    department: 'BCA',
+    bio: "Dear Uma Ma'am, thank you for being a wonderful Faculty Coordinator for the BCA Department. Your constant guidance, encouragement, and support inspire us to give our best every day.",
     photoUrl: '/images/uma-mageswari.jpeg',
     category: FACULTY_ROLES.FACULTY
   }

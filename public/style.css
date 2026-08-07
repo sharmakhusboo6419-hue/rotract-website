@@ -920,7 +920,7 @@ body.site-shell main {
 
 /* Header brand logo */
 .header-logo {
-  height: 42px;
+  height: 56px;
   width: auto;
   display: block;
   filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5));
