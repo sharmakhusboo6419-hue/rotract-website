@@ -106,26 +106,47 @@ app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Database Connection
-const PORT = process.env.PORT || 5000;
+// Serverless-friendly Database Connection Helper
 const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
-  throw new Error('MONGO_URI is not set. Check .env or define it in the environment.');
+let cached = global.mongoose;
+if (!cached) {
+  cached = global.mongoose = { conn: null, promise: null };
 }
 
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('✅ Connected to MongoDB Atlas!'))
-  .catch(err => console.error('❌ MongoDB Connection Error:', err));
+async function connectDB() {
+  if (!MONGO_URI) {
+    throw new Error('MONGO_URI is not set in environment variables.');
+  }
+
+  if (cached.conn) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    cached.promise = mongoose.connect(MONGO_URI, {
+      bufferCommands: false,
+    }).then((mongooseInstance) => {
+      console.log('✅ Connected to MongoDB Atlas!');
+      return mongooseInstance;
+    });
+  }
+
+  try {
+    cached.conn = await cached.promise;
+  } catch (error) {
+    cached.promise = null;
+    throw error;
+  }
+
+  return cached.conn;
+}
+
+// ==================== API ROUTES ====================
 
 app.get('/api/members', async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.json([...teamMembers, ...membersList].map((member) => ({
-        ...member,
-        photoUrl: normalizePhotoUrl(member.photoUrl, member.name)
-      })));
-    }
+    await connectDB();
 
     const members = await TeamMember.find().sort({ createdAt: -1 });
     const normalizedMembers = members.map((member) => ({
@@ -143,12 +164,17 @@ app.get('/api/members', async (req, res) => {
     res.json(normalizedMembers);
   } catch (error) {
     console.error('Error fetching members:', error);
-    res.status(500).json({ error: 'Failed to retrieve members' });
+    // Fallback to static seed list if DB connection fails
+    res.json([...teamMembers, ...membersList].map((member) => ({
+      ...member,
+      photoUrl: normalizePhotoUrl(member.photoUrl, member.name)
+    })));
   }
 });
 
 app.post('/api/members', async (req, res) => {
   try {
+    await connectDB();
     const { name, role, email, photoUrl, bio, year, category } = req.body;
 
     if (!name || !role || !photoUrl) {
@@ -182,21 +208,19 @@ app.get('/api/faculty', (req, res) => {
   }
 });
 
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    database: mongoose.connection.readyState === 1 ? 'connected' : 'connecting'
-  });
+app.get('/api/health', async (req, res) => {
+  try {
+    await connectDB();
+    res.json({ status: 'ok', database: 'connected' });
+  } catch (err) {
+    res.json({ status: 'ok', database: 'disconnected' });
+  }
 });
-
-// ==================== API ROUTES ====================
 
 // 1. GET: Fetch all active projects
 app.get('/api/projects', async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(503).json({ error: 'Database initializing. Please try again in a few seconds.' });
-    }
+    await connectDB();
 
     const projects = await Project.find().sort({ createdAt: -1 });
     res.json(projects);
@@ -209,9 +233,7 @@ app.get('/api/projects', async (req, res) => {
 // 2. POST: Submit a new project proposal
 app.post('/api/projects', async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(503).json({ error: 'Database initializing. Please try again in a few seconds.' });
-    }
+    await connectDB();
 
     const { title, category, description, submittedBy, email } = req.body;
 
@@ -238,9 +260,7 @@ app.post('/api/projects', async (req, res) => {
 // 3. POST: Register new club member (Join Us)
 app.post('/api/join', async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(503).json({ error: 'Database initializing. Please try again in a few seconds.' });
-    }
+    await connectDB();
 
     const { name, email, phone, interests, reason } = req.body;
 
@@ -279,7 +299,6 @@ app.post('/api/contact', async (req, res) => {
       return res.status(400).json({ error: 'Name, email, and message are required.' });
     }
 
-    // Log contact submission (can be stored in a collection or dispatched via email)
     console.log(`📩 New Contact Message from ${name} (${email}): ${message}`);
 
     res.status(200).json({ message: 'Thank you for reaching out! We will get back to you soon.' });
@@ -289,7 +308,12 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-// Start Server
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
+// Start Server locally or export for Vercel Serverless
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Local Server running on port ${PORT}`);
+  });
+}
+
+module.exports = app;
