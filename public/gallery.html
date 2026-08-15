@@ -37,7 +37,15 @@
     </section>
 
     <section class="page-section page-shell">
-      <div class="form-card" style="max-width: 42rem; margin-inline: auto; margin-bottom: 3rem;">
+      <div class="section-heading">
+        <span class="section-badge">Gallery</span>
+        <h2 class="section-title">All Event Photos</h2>
+      </div>
+      <div id="photoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <p class="text-slate-500 col-span-full text-center">Loading photos...</p>
+      </div>
+
+      <div class="form-card" style="max-width: 42rem; margin-inline: auto; margin-top: 3rem;">
         <div class="text-center mb-6">
           <span class="section-badge">Add Photos</span>
           <h2 class="text-2xl font-bold text-amber-400 mt-3 mb-1">Upload Event Photos</h2>
@@ -64,14 +72,6 @@
         </form>
 
         <p id="photoMsg" class="status-message text-center text-sm hidden"></p>
-      </div>
-
-      <div class="section-heading">
-        <span class="section-badge">Gallery</span>
-        <h2 class="section-title">All Event Photos</h2>
-      </div>
-      <div id="photoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        <p class="text-slate-500 col-span-full text-center">Loading photos...</p>
       </div>
     </section>
   </main>
