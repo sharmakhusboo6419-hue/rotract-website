@@ -82,6 +82,20 @@
 
   <script>
     const PHOTOS_API = '/api/photos';
+    const LS_KEY = 'rcpc_gallery_photos';
+
+    const EMBEDDED_PHOTOS = [
+      {
+        title: 'Club Event',
+        caption: 'Memories from a recent RCPC event.',
+        imageUrl: 'images/rcpc-event-1.jpg',
+        createdAt: new Date('2026-08-15T16:07:19Z').toISOString()
+      }
+    ];
+
+    function normalizeImageUrl(url) {
+      return String(url || '').replace(/^\//, '');
+    }
 
     function formatDate(value) {
       if (!value) return '';
@@ -89,62 +103,115 @@
       return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
     }
 
+    function getLocalPhotos() {
+      try {
+        return JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+      } catch (err) {
+        return [];
+      }
+    }
+
+    function saveLocalPhotos(photos) {
+      localStorage.setItem(LS_KEY, JSON.stringify(photos));
+    }
+
+    function photoCard(p) {
+      const url = normalizeImageUrl(p.imageUrl);
+      return `
+        <figure class="home-project-card overflow-hidden">
+          <a href="${url}" target="_blank" rel="noopener">
+            <img src="${url}" alt="${p.title}" class="w-full h-56 object-cover rounded-t-lg bg-slate-800" onerror="this.src='images/rcpc-event-1.jpg';">
+          </a>
+          <figcaption class="p-4">
+            <h3 class="text-lg font-bold text-slate-100 mb-1">${p.title || 'Event Photo'}</h3>
+            ${p.event ? `<span class="text-amber-200 text-xs font-semibold uppercase tracking-wider">${p.event}</span>` : ''}
+            ${p.caption ? `<p class="text-slate-400 text-sm mt-2 leading-relaxed">${p.caption}</p>` : ''}
+            ${p.uploadedBy ? `<p class="text-slate-500 text-xs mt-2">Uploaded by ${p.uploadedBy}</p>` : ''}
+            <p class="text-slate-600 text-xs mt-1">${formatDate(p.createdAt)}</p>
+          </figcaption>
+        </figure>
+      `;
+    }
+
+    function renderPhotos(photos) {
+      const grid = document.getElementById('photoGrid');
+      if (!photos.length) {
+        grid.innerHTML = `<p class="text-slate-500 col-span-full text-center">No photos yet. Upload your first event photo above!</p>`;
+        return;
+      }
+      grid.innerHTML = photos.map(photoCard).join('');
+    }
+
     async function loadPhotos() {
       const grid = document.getElementById('photoGrid');
+      const locals = getLocalPhotos();
       try {
         const res = await fetch(PHOTOS_API);
-        const photos = await res.json();
-        if (!photos.length) {
-          grid.innerHTML = `<p class="text-slate-500 col-span-full text-center">No photos yet. Upload your first event photo above!</p>`;
+        if (res.ok) {
+          const photos = await res.json();
+          renderPhotos([...photos, ...locals, ...EMBEDDED_PHOTOS]);
           return;
         }
-        grid.innerHTML = photos.map(p => `
-          <figure class="home-project-card overflow-hidden">
-            <a href="${p.imageUrl}" target="_blank" rel="noopener">
-              <img src="${p.imageUrl}" alt="${p.title}" class="w-full h-56 object-cover rounded-t-lg bg-slate-800">
-            </a>
-            <figcaption class="p-4">
-              <h3 class="text-lg font-bold text-slate-100 mb-1">${p.title || 'Event Photo'}</h3>
-              ${p.event ? `<span class="text-amber-200 text-xs font-semibold uppercase tracking-wider">${p.event}</span>` : ''}
-              ${p.caption ? `<p class="text-slate-400 text-sm mt-2 leading-relaxed">${p.caption}</p>` : ''}
-              ${p.uploadedBy ? `<p class="text-slate-500 text-xs mt-2">Uploaded by ${p.uploadedBy}</p>` : ''}
-              <p class="text-slate-600 text-xs mt-1">${formatDate(p.createdAt)}</p>
-            </figcaption>
-          </figure>
-        `).join('');
       } catch (err) {
-        grid.innerHTML = `<p class="text-amber-400 col-span-full text-center">Unable to load photos right now.</p>`;
+        // server unreachable — fall through to offline data
       }
+      renderPhotos([...locals, ...EMBEDDED_PHOTOS]);
     }
 
     document.getElementById('photoForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = document.getElementById('photoMsg');
-
-      const formData = new FormData();
-      formData.append('image', document.getElementById('photoImage').files[0]);
-      formData.append('title', document.getElementById('photoTitle').value);
-      formData.append('caption', document.getElementById('photoCaption').value);
+      const file = document.getElementById('photoImage').files[0];
+      const title = document.getElementById('photoTitle').value;
+      const caption = document.getElementById('photoCaption').value;
 
       msg.textContent = 'Uploading photo...';
       msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
       msg.classList.remove('hidden');
 
       try {
+        const formData = new FormData();
+        formData.append('image', file);
+        formData.append('title', title);
+        formData.append('caption', caption);
+
         const res = await fetch(PHOTOS_API, { method: 'POST', body: formData });
         if (res.ok) {
           msg.textContent = 'Photo uploaded successfully!';
           msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
           document.getElementById('photoForm').reset();
-          loadPhotos();
-        } else {
-          const data = await res.json().catch(() => ({}));
-          throw new Error(data.error || 'Failed to upload');
+          return loadPhotos();
         }
       } catch (err) {
-        msg.textContent = 'Error uploading photo. Please try again.';
-        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
+        // server unreachable — save locally
       }
+
+      // Offline fallback: store the photo in the browser's localStorage
+      if (!file) {
+        msg.textContent = 'Please choose an image to upload.';
+        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = () => {
+        const locals = getLocalPhotos();
+        locals.unshift({
+          title: title || 'Event Photo',
+          caption,
+          imageUrl: reader.result,
+          createdAt: new Date().toISOString()
+        });
+        saveLocalPhotos(locals);
+        msg.textContent = 'Photo saved locally. Start the server to share it with everyone!';
+        msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
+        document.getElementById('photoForm').reset();
+        renderPhotos([...locals, ...EMBEDDED_PHOTOS]);
+      };
+      reader.onerror = () => {
+        msg.textContent = 'Error reading photo. Please try again.';
+        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
+      };
+      reader.readAsDataURL(file);
     });
 
     loadPhotos();
