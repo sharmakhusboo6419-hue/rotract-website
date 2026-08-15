@@ -19,6 +19,7 @@
         <a href="about.html" class="hover:underline">About</a>
         <a href="meet.html" class="font-semibold underline">Meet Us</a>
         <a href="join.html" class="hover:underline">Join Us</a>
+        <a href="gallery.html" class="hover:underline">Gallery</a>
         <a href="contact.html" class="hover:underline">Contact</a>
       </div>
     </nav>
@@ -107,6 +108,38 @@
     const MEMBERS_API = '/api/members';
     const FACULTY_API = '/api/faculty';
 
+    const EMBEDDED_DATA = {
+      members: [
+        {"name":"Rtr. Skanda","role":"President","bio":"Leader, Passionate, Kind.","photoUrl":"/images/skanda.jpeg","category":"leadership"},
+        {"name":"Rtr. Avnish Kumar","role":"Vice President","bio":"Creative, Strategic Thinker.","photoUrl":"/images/avnish-kumar-2026.jpeg","category":"leadership"},
+        {"name":"Rtr. Dolly Gupta","role":"Secretary","bio":"Friendly, Compassionate, Supportive.","photoUrl":"/images/dolly-gupta.jpeg","category":"leadership"},
+        {"name":"Rtr. Deepak Kumar Barik","role":"Operation Secretary","bio":"Creative, Strategic Thinker.","photoUrl":"/images/deepak-kumar-barik.jpeg","category":"leadership"},
+        {"name":"Rtr. Patan Anif","role":"Sergeant-At-Arms","bio":"Discipline, Leadership, Integrity.","photoUrl":"/images/patan-anif.jpeg","category":"leadership"},
+        {"name":"Rtr. Sathwik","role":"Club Treasurer","bio":"Hope, Justice, Purpose.","photoUrl":"/images/sathwik-new.jpeg","category":"leadership"},
+        {"name":"Rtr. Sibhi Solanki","role":"Club Treasurer","bio":"Introvert, Friendly, Calm.","photoUrl":"/images/sibhi-solanki.jpeg","category":"leadership"},
+        {"name":"Rtr. Sandhya Kumari","role":"Public Relations Director","bio":"Funny, Ambitious, Supportive.","photoUrl":"/images/sandhya-new.jpeg","category":"leadership"},
+        {"name":"Rtr. Ramya","role":"Public Relations Director","bio":"Confident, Positive, Brave.","photoUrl":"/images/ramya.jpeg","category":"leadership"},
+        {"name":"Rtr. Dithipriya Dutta","role":"Public Relational Director","bio":"Calm, Confident, Observant.","photoUrl":"/images/dithi-priya.jpeg","category":"leadership"},
+        {"name":"Rtr. Kaneez Fatima","role":"Club Service Director","bio":"Compassionate, Dedicated, Supportive.","photoUrl":"/images/kaneez-fatima.jpeg","category":"leadership"},
+        {"name":"Rtr. Hamid Ashraf","role":"Club Service Director","bio":"Dedicated, Supportive, Reliable.","photoUrl":"/images/hamid-ashraf.jpeg","category":"leadership"},
+        {"name":"Rtr. Khusboo Sharma","role":"Cultural Event Director","bio":"Creative, Enthusiastic, Organized.","photoUrl":"/images/khusboo-sharma.jpeg","category":"leadership"},
+        {"name":"Rtr. Iman Shariff","role":"Cultural Event Director","bio":"Introvert, Shy,confident.","photoUrl":"/images/iman-shariff.jpeg","category":"leadership"},
+        {"name":"Rtr. Vani Ray","role":"Director of Events","bio":"Vibrant, Goofy, Expressive.","photoUrl":"/images/vani-ray.jpeg","category":"leadership"},
+        {"name":"Rtr. Aditya Raj","role":"Director of Events","bio":"Extrovert, Adaptable, Empathetic.","photoUrl":"/images/aditya-raj.jpeg","category":"leadership"},
+        {"name":"Rtr. Adithyian Vinod","role":"Community Service Director","bio":"Dedicated, Supportive, Reliable.","photoUrl":"/images/adithyian-vinod.png","category":"leadership"},
+        {"name":"Rtr. Monisha Kumari","role":"Community Service Director","bio":"Dedicated, Supportive, Reliable.","photoUrl":"/images/monisha-kumari.jpeg","category":"leadership"},
+        {"name":"Rtr. Dhanush","role":"International Service Director","bio":"Dedicated, Supportive, Reliable.","photoUrl":"/images/dhanush.jpeg","category":"leadership"},
+        {"name":"Rtr. Noor Hoorain","role":"Professional Development Director","bio":"Empathetic,Resilient, Bold.","photoUrl":"/images/noor-hoorain.jpeg","category":"leadership"},
+        {"name":"Rtr. Syed Mohd Zayeed","role":"Professional Development Director","bio":"Dedicated, Supportive, Reliable.","photoUrl":"/images/syed-zayeed.jpeg","category":"leadership"},
+        {"name":"Rtr. Kishan Pandey","role":"Professional Development Director","bio":"Dedicated, Supportive, Reliable.","photoUrl":"/images/kishan-pandey.jpeg","category":"leadership"}
+      ],
+      faculty: [
+        {"name":"Ms. Noreen Alexeena Datta","role":"Faculty Coordinator","department":"Political Science","bio":"The Head of our Rotaract Club of Presidency College.","photoUrl":"/images/noreen-datta.jpeg","category":"faculty-coordinator"},
+        {"name":"Ms. Poojashree C","role":"Faculty Coordinator","department":"BBA & BCom","bio":"The Faculty Coordinator for the BBA and BCom Departments. Your guidance, encouragement, and positive attitude inspire students to achieve their best. Your commitment and care have played an important role in the success of our club activities.","photoUrl":"/images/poojashree-c.jpeg","category":"faculty"},
+        {"name":"Ms. P. Uma Mageswari","role":"Faculty Coordinator","department":"BCA","bio":"Dear Uma Ma'am, thank you for being a wonderful Faculty Coordinator for the BCA Department. Your constant guidance, encouragement, and support inspire us to give our best every day.","photoUrl":"/images/uma-mageswari.jpeg","category":"faculty"}
+      ]
+    };
+
     function createFallbackPhoto(name, fallbackLetter = 'M') {
       const initials = String(name || 'Member')
         .trim()
@@ -143,7 +176,7 @@
       }
       container.innerHTML = items.map(m => {
         const photoUrl = (m.photoUrl && typeof m.photoUrl === 'string' && m.photoUrl.trim())
-          ? m.photoUrl
+          ? m.photoUrl.replace(/^\//, '')
           : createFallbackPhoto(m.name, m.name ? m.name[0] : 'M');
 
         const extra = m.department
@@ -152,7 +185,7 @@
 
         return `
           <div class="member-card text-center">
-            <img src="${photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-800" loading="lazy" onerror="this.onerror=null; this.src='${createFallbackPhoto(m.name)}';">
+            <img src="${photoUrl}" alt="${m.name}" class="w-full h-48 object-cover bg-slate-800" onerror="this.onerror=null; this.src='${createFallbackPhoto(m.name)}';">
             <div class="member-card__body">
               <h3 class="member-name">${m.name}</h3>
               <span class="member-role">${m.role}</span>
@@ -169,10 +202,11 @@
       const grid = document.getElementById('facultyGrid');
       try {
         const res = await fetch(FACULTY_API);
+        if (!res.ok) throw new Error('API failed');
         const faculty = await res.json();
         renderGrid(grid, faculty, { onEmpty: 'No faculty added yet.' });
       } catch (err) {
-        grid.innerHTML = `<p class="text-amber-400 col-span-full text-center">Unable to load faculty right now.</p>`;
+        renderGrid(grid, EMBEDDED_DATA.faculty, { onEmpty: 'No faculty added yet.' });
       }
     }
 
@@ -180,10 +214,11 @@
       const grid = document.getElementById('membersGrid');
       try {
         const res = await fetch(MEMBERS_API);
+        if (!res.ok) throw new Error('API failed');
         const members = await res.json();
         renderGrid(grid, members, { onEmpty: 'No members added yet. Use the form below to add members!' });
       } catch (err) {
-        grid.innerHTML = `<p class="text-amber-400 col-span-full text-center">Unable to load members right now.</p>`;
+        renderGrid(grid, EMBEDDED_DATA.members, { onEmpty: 'No members added yet. Use the form below to add members!' });
       }
     }
 

@@ -5,9 +5,11 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const multer = require('multer');
 
 const Project = require('./models/Project.js');
 const Member = require('./models/Member.js');
+const Photo = require('./models/Photo.js');
 const { teamMembers, membersList } = require('./seed-data/members-data');
 const { facultyList } = require('./seed-data/faculty-data');
 
@@ -105,6 +107,20 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Multer config for gallery photo uploads
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, path.join(__dirname, 'public/uploads')),
+  filename: (req, file, cb) => {
+    const safeName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
+    cb(null, `${Date.now()}-${safeName}`);
+  }
+});
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/')) return cb(null, true);
+  cb(new Error('Only image files are allowed.'));
+};
+const upload = multer({ storage, fileFilter, limits: { fileSize: 8 * 1024 * 1024 } });
 
 // Serverless-friendly Database Connection Helper
 const MONGO_URI = process.env.MONGO_URI;
@@ -205,6 +221,49 @@ app.get('/api/faculty', (req, res) => {
   } catch (error) {
     console.error('Error fetching faculty:', error);
     res.status(500).json({ error: 'Failed to retrieve faculty' });
+  }
+});
+
+// ==================== GALLERY API ====================
+
+// GET: Fetch all gallery photos
+app.get('/api/photos', async (req, res) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database initializing. Please try again in a few seconds.' });
+    }
+    const photos = await Photo.find().sort({ createdAt: -1 });
+    res.json(photos);
+  } catch (error) {
+    console.error('Error fetching photos:', error);
+    res.status(500).json({ error: 'Failed to retrieve photos' });
+  }
+});
+
+// POST: Upload a gallery photo
+app.post('/api/photos', upload.single('image'), async (req, res) => {
+  try {
+    if (mongoose.connection.readyState !== 1) {
+      return res.status(503).json({ error: 'Database initializing. Please try again in a few seconds.' });
+    }
+    if (!req.file) {
+      return res.status(400).json({ error: 'Please choose an image to upload.' });
+    }
+
+    const { title, caption, event, uploadedBy } = req.body;
+    const newPhoto = new Photo({
+      title: title || 'Event Photo',
+      caption: caption || '',
+      imageUrl: `/uploads/${req.file.filename}`,
+      event: event || '',
+      uploadedBy: uploadedBy || ''
+    });
+
+    await newPhoto.save();
+    res.status(201).json({ message: 'Photo uploaded successfully!', photo: newPhoto });
+  } catch (error) {
+    console.error('Error uploading photo:', error);
+    res.status(500).json({ error: 'Failed to upload photo' });
   }
 });
 

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rotaract Club - Gallery</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="site-shell flex flex-col min-h-screen">
+
+  <header class="site-header">
+    <nav>
+      <a href="index.html" class="flex items-center group">
+        <img src="images/rcpc-theme-white.png" alt="RCPC" class="header-logo">
+      </a>
+      <div class="space-x-6 text-sm sm:text-base font-medium">
+        <a href="index.html" class="hover:underline">Home</a>
+        <a href="about.html" class="hover:underline">About</a>
+        <a href="meet.html" class="hover:underline">Meet Us</a>
+        <a href="join.html" class="hover:underline">Join Us</a>
+        <a href="gallery.html" class="font-semibold underline">Gallery</a>
+        <a href="contact.html" class="hover:underline">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="flex-grow">
+    <section class="page-hero">
+      <div class="page-shell">
+        <span class="hero-kicker">Our Moments</span>
+        <h1 class="page-hero__title gold-text">Event Gallery</h1>
+        <p class="page-hero__copy">
+          A collection of memories from the events, drives, and milestones of the Rotaract Club of <span class="presidency-word">Presidency</span> College.
+        </p>
+      </div>
+    </section>
+
+    <section class="page-section page-shell">
+      <div class="form-card" style="max-width: 42rem; margin-inline: auto; margin-bottom: 3rem;">
+        <div class="text-center mb-6">
+          <span class="section-badge">Add Photos</span>
+          <h2 class="text-2xl font-bold text-amber-400 mt-3 mb-1">Upload Event Photos</h2>
+          <p class="text-slate-300 text-sm">Share photos from your latest RCPC event.</p>
+        </div>
+
+        <form id="photoForm" class="space-y-5">
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Event Title</label>
+            <input type="text" id="photoTitle" placeholder="e.g. Technoshala 2026" class="form-control">
+          </div>
+
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Caption</label>
+            <textarea id="photoCaption" rows="2" placeholder="What happened in this photo?" class="form-control"></textarea>
+          </div>
+
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Photo</label>
+            <input type="file" id="photoImage" accept="image/*" required class="form-control">
+          </div>
+
+          <button type="submit" class="primary-button" style="width: 100%;">Upload Photo</button>
+        </form>
+
+        <p id="photoMsg" class="status-message text-center text-sm hidden"></p>
+      </div>
+
+      <div class="section-heading">
+        <span class="section-badge">Gallery</span>
+        <h2 class="section-title">All Event Photos</h2>
+      </div>
+      <div id="photoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <p class="text-slate-500 col-span-full text-center">Loading photos...</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer py-6 text-center text-sm border-t border-amber-500/30">
+    <p>&copy; Rotaract Club of <span class="presidency-word">Presidency</span> College. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const PHOTOS_API = '/api/photos';
+
+    function formatDate(value) {
+      if (!value) return '';
+      const d = new Date(value);
+      return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
+    }
+
+    async function loadPhotos() {
+      const grid = document.getElementById('photoGrid');
+      try {
+        const res = await fetch(PHOTOS_API);
+        const photos = await res.json();
+        if (!photos.length) {
+          grid.innerHTML = `<p class="text-slate-500 col-span-full text-center">No photos yet. Upload your first event photo above!</p>`;
+          return;
+        }
+        grid.innerHTML = photos.map(p => `
+          <figure class="home-project-card overflow-hidden">
+            <a href="${p.imageUrl}" target="_blank" rel="noopener">
+              <img src="${p.imageUrl}" alt="${p.title}" class="w-full h-56 object-cover rounded-t-lg bg-slate-800">
+            </a>
+            <figcaption class="p-4">
+              <h3 class="text-lg font-bold text-slate-100 mb-1">${p.title || 'Event Photo'}</h3>
+              ${p.event ? `<span class="text-amber-200 text-xs font-semibold uppercase tracking-wider">${p.event}</span>` : ''}
+              ${p.caption ? `<p class="text-slate-400 text-sm mt-2 leading-relaxed">${p.caption}</p>` : ''}
+              ${p.uploadedBy ? `<p class="text-slate-500 text-xs mt-2">Uploaded by ${p.uploadedBy}</p>` : ''}
+              <p class="text-slate-600 text-xs mt-1">${formatDate(p.createdAt)}</p>
+            </figcaption>
+          </figure>
+        `).join('');
+      } catch (err) {
+        grid.innerHTML = `<p class="text-amber-400 col-span-full text-center">Unable to load photos right now.</p>`;
+      }
+    }
+
+    document.getElementById('photoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('photoMsg');
+
+      const formData = new FormData();
+      formData.append('image', document.getElementById('photoImage').files[0]);
+      formData.append('title', document.getElementById('photoTitle').value);
+      formData.append('caption', document.getElementById('photoCaption').value);
+
+      msg.textContent = 'Uploading photo...';
+      msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
+      msg.classList.remove('hidden');
+
+      try {
+        const res = await fetch(PHOTOS_API, { method: 'POST', body: formData });
+        if (res.ok) {
+          msg.textContent = 'Photo uploaded successfully!';
+          msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
+          document.getElementById('photoForm').reset();
+          loadPhotos();
+        } else {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || 'Failed to upload');
+        }
+      } catch (err) {
+        msg.textContent = 'Error uploading photo. Please try again.';
+        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
+      }
+    });
+
+    loadPhotos();
+  </script>
+</body>
+</html>
