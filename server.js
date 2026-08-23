@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 require('dotenv').config();
 
@@ -104,13 +105,20 @@ function normalizePhotoUrl(photoUrl, name = 'Member') {
 const app = express();
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Ensure public/uploads folder exists locally
+const uploadDir = path.join(__dirname, 'public/uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 // Multer config for gallery photo uploads
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, path.join(__dirname, 'public/uploads')),
+  destination: (req, file, cb) => cb(null, uploadDir),
   filename: (req, file, cb) => {
     const safeName = file.originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
     cb(null, `${Date.now()}-${safeName}`);
@@ -229,9 +237,7 @@ app.get('/api/faculty', (req, res) => {
 // GET: Fetch all gallery photos
 app.get('/api/photos', async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(503).json({ error: 'Database initializing. Please try again in a few seconds.' });
-    }
+    await connectDB();
     const photos = await Photo.find().sort({ createdAt: -1 });
     res.json(photos);
   } catch (error) {
@@ -240,21 +246,27 @@ app.get('/api/photos', async (req, res) => {
   }
 });
 
-// POST: Upload a gallery photo
+// POST: Upload a gallery photo (Handles both File upload via Multer & Base64 JSON)
 app.post('/api/photos', upload.single('image'), async (req, res) => {
   try {
-    if (mongoose.connection.readyState !== 1) {
-      return res.status(503).json({ error: 'Database initializing. Please try again in a few seconds.' });
-    }
-    if (!req.file) {
-      return res.status(400).json({ error: 'Please choose an image to upload.' });
+    await connectDB();
+
+    const { title, caption, event, uploadedBy, imageUrl } = req.body;
+    let finalImageUrl = imageUrl;
+
+    // If file was uploaded via Multer
+    if (req.file) {
+      finalImageUrl = `/uploads/${req.file.filename}`;
     }
 
-    const { title, caption, event, uploadedBy } = req.body;
+    if (!finalImageUrl) {
+      return res.status(400).json({ error: 'Please select an image file to upload.' });
+    }
+
     const newPhoto = new Photo({
       title: title || 'Event Photo',
       caption: caption || '',
-      imageUrl: `/uploads/${req.file.filename}`,
+      imageUrl: finalImageUrl,
       event: event || '',
       uploadedBy: uploadedBy || ''
     });

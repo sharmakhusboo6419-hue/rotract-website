@@ -94,7 +94,11 @@
     ];
 
     function normalizeImageUrl(url) {
-      return String(url || '').replace(/^\//, '');
+      if (!url) return 'images/rcpc-event-1.jpg';
+      if (url.startsWith('data:image/') || url.startsWith('http://') || url.startsWith('https://')) {
+        return url;
+      }
+      return String(url).replace(/^\//, '');
     }
 
     function formatDate(value) {
@@ -143,7 +147,6 @@
     }
 
     async function loadPhotos() {
-      const grid = document.getElementById('photoGrid');
       const locals = getLocalPhotos();
       try {
         const res = await fetch(PHOTOS_API);
@@ -153,7 +156,7 @@
           return;
         }
       } catch (err) {
-        // server unreachable — fall through to offline data
+        console.warn('Server offline, loading local and embedded photos.');
       }
       renderPhotos([...locals, ...EMBEDDED_PHOTOS]);
     }
@@ -165,52 +168,62 @@
       const title = document.getElementById('photoTitle').value;
       const caption = document.getElementById('photoCaption').value;
 
+      if (!file) {
+        msg.textContent = 'Please choose an image to upload.';
+        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
+        msg.classList.remove('hidden');
+        return;
+      }
+
       msg.textContent = 'Uploading photo...';
       msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
       msg.classList.remove('hidden');
 
-      try {
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('title', title);
-        formData.append('caption', caption);
-
-        const res = await fetch(PHOTOS_API, { method: 'POST', body: formData });
-        if (res.ok) {
-          msg.textContent = 'Photo uploaded successfully!';
-          msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
-          document.getElementById('photoForm').reset();
-          return loadPhotos();
-        }
-      } catch (err) {
-        // server unreachable — save locally
-      }
-
-      // Offline fallback: store the photo in the browser's localStorage
-      if (!file) {
-        msg.textContent = 'Please choose an image to upload.';
-        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
-        return;
-      }
       const reader = new FileReader();
-      reader.onload = () => {
-        const locals = getLocalPhotos();
-        locals.unshift({
-          title: title || 'Event Photo',
-          caption,
-          imageUrl: reader.result,
-          createdAt: new Date().toISOString()
-        });
-        saveLocalPhotos(locals);
-        msg.textContent = 'Photo saved locally. Start the server to share it with everyone!';
-        msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
-        document.getElementById('photoForm').reset();
-        renderPhotos([...locals, ...EMBEDDED_PHOTOS]);
+      reader.onload = async () => {
+        const base64Image = reader.result;
+
+        try {
+          const res = await fetch(PHOTOS_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: title || 'Event Photo',
+              caption,
+              imageUrl: base64Image
+            })
+          });
+
+          if (res.ok) {
+            msg.textContent = 'Photo uploaded successfully!';
+            msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
+            document.getElementById('photoForm').reset();
+            await loadPhotos();
+            return;
+          }
+          throw new Error('Upload response failed');
+        } catch (err) {
+          // Offline fallback if the server is unreachable
+          const locals = getLocalPhotos();
+          locals.unshift({
+            title: title || 'Event Photo',
+            caption,
+            imageUrl: base64Image,
+            createdAt: new Date().toISOString()
+          });
+          saveLocalPhotos(locals);
+          msg.textContent = 'Server unreachable. Saved photo locally to this browser!';
+          msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
+          document.getElementById('photoForm').reset();
+          renderPhotos([...locals, ...EMBEDDED_PHOTOS]);
+        }
       };
+
       reader.onerror = () => {
-        msg.textContent = 'Error reading photo. Please try again.';
+        msg.textContent = 'Error reading photo file.';
         msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
       };
+
       reader.readAsDataURL(file);
     });
 
