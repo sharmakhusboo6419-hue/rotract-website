@@ -84,14 +84,7 @@
     const PHOTOS_API = '/api/photos';
     const LS_KEY = 'rcpc_gallery_photos';
 
-    const EMBEDDED_PHOTOS = [
-      {
-        title: 'Club Event',
-        caption: 'Memories from a recent RCPC event.',
-        imageUrl: 'images/rcpc-event-1.jpg',
-        createdAt: new Date('2026-08-15T16:07:19Z').toISOString()
-      }
-    ];
+    const EMBEDDED_PHOTOS = [];
 
     function normalizeImageUrl(url) {
       if (!url) return 'images/rcpc-event-1.jpg';
