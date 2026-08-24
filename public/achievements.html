@@ -123,5 +123,70 @@
     <p>&copy; Rotaract Club of <span class="presidency-word">Presidency</span> College. All rights reserved.</p>
   </footer>
 
+  <script>
+    const Achievement = function() {
+      this.title = '';
+      this.description = '';
+      this.category = 'General';
+      this.photoUrl = '';
+    };
+
+    const form = document.getElementById('achievementForm');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const title = document.getElementById('achTitle').value;
+      const description = document.getElementById('achDescription').value;
+      const category = document.getElementById('achCategory').value;
+
+      const msg = document.getElementById('achievementMsg');
+      msg.textContent = 'Submitting...';
+      msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
+      msg.classList.remove('hidden');
+
+      try {
+        const res = await fetch('/api/achievements', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title, description, category })
+        });
+        if (res.ok) {
+          msg.textContent = 'Achievement submitted successfully!';
+          msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
+          form.reset();
+          loadAchievements();
+        } else {
+          const err = await res.json();
+          msg.textContent = err.error || 'Submission failed';
+          msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
+        }
+      } catch (err) {
+        msg.textContent = 'Error submitting. Please try again.';
+        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
+      }
+    });
+
+    async function loadAchievements() {
+      const res = await fetch('/api/achievements');
+      const achievements = await res.json();
+      const grid = document.querySelector('.achievement-grid');
+      if (achievements.length === 0) {
+        grid.innerHTML = '<p class="text-slate-500 col-span-full text-center">No achievements yet. Submit your first!</p>';
+        return;
+      }
+      grid.innerHTML = achievements.map(a => `
+        <div class="achievement-card">
+          <div class="achievement-icon">🏆</div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-100 mb-2">${a.title}</h3>
+            <p class="text-slate-300 text-sm">${a.description}</p>
+            <p class="text-slate-500 text-xs">Category: ${a.category}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    loadAchievements();
+  </script>
 </body>
 </html>

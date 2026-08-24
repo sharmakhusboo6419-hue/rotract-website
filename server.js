@@ -240,16 +240,18 @@ app.get('/api/faculty', (req, res) => {
 // ==================== ACHIEVEMENTS API ====================
 
 // POST: Submit a new achievement
-app.post('/api/achievements', (req, res) => {
+app.post('/api/achievements', upload.single('achPhoto'), (req, res) => {
   const { title, description, category } = req.body;
   if (!title || !description) {
     return res.status(400).json({ error: 'Title and description are required.' });
   }
+  const photoUrl = req.file ? `/uploads/${req.file.filename}` : '';
   const achievement = {
     id: achievements.length + 1,
     title,
     description,
     category: category || 'General',
+    photoUrl,
     createdAt: new Date()
   };
   achievements.push(achievement);
