@@ -14,6 +14,11 @@ const Photo = require('./models/Photo.js');
 const { teamMembers, membersList } = require('./seed-data/members-data');
 const { facultyList } = require('./seed-data/faculty-data');
 
+// Achievements storage (in-memory for simplicity)
+const achievements = [];
+
+module.exports = { facultyList };
+
 const teamMemberSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -230,6 +235,30 @@ app.get('/api/faculty', (req, res) => {
     console.error('Error fetching faculty:', error);
     res.status(500).json({ error: 'Failed to retrieve faculty' });
   }
+});
+
+// ==================== ACHIEVEMENTS API ====================
+
+// POST: Submit a new achievement
+app.post('/api/achievements', (req, res) => {
+  const { title, description, category } = req.body;
+  if (!title || !description) {
+    return res.status(400).json({ error: 'Title and description are required.' });
+  }
+  const achievement = {
+    id: achievements.length + 1,
+    title,
+    description,
+    category: category || 'General',
+    createdAt: new Date()
+  };
+  achievements.push(achievement);
+  res.status(201).json({ message: 'Achievement submitted successfully!', achievement });
+});
+
+// GET: Fetch all achievements
+app.get('/api/achievements', (req, res) => {
+  res.json(achievements);
 });
 
 // ==================== GALLERY API ====================

@@ -72,7 +72,8 @@
           <div class="achievement-icon">🌐</div>
           <div>
             <h3 class="text-xl font-bold text-slate-100 mb-2">Rotary District 3192</h3>
-            <p class="text-slate-300 text-sm">RCPC is chartered under Rotary International's District 3192, Zone Arnava.</          </div>
+            <p class="text-slate-300 text-sm">RCPC is chartered under Rotary International's District 3192, Zone Arnava.</p>
+          </div>
         </div>
 
         <div class="achievement-card">
@@ -83,6 +84,38 @@
           </div>
         </div>
       </div>
+
+      <section class="page-section page-shell">
+        <div class="section-heading">
+          <span class="section-badge">Submit Achievement</span>
+          <h2 class="section-title">Share Your Achievement</h2>
+        </div>
+        <form id="achievementForm" class="max-w-md mx-auto space-y-4">
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Title</label>
+            <input type="text" id="achTitle" required class="form-control">
+          </div>
+
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Description</label>
+            <textarea id="achDescription" rows="3" required class="form-control"></textarea>
+          </div>
+
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Category</label>
+            <select id="achCategory" class="form-control">
+              <option value="General">General</option>
+              <option value="Service">Service</option>
+              <option value="Leadership">Leadership</option>
+              <option value="Event">Event</option>
+              <option value="Award">Award</option>
+            </select>
+          </div>
+
+          <button type="submit" class="primary-button w-full">Submit Achievement</button>
+        </form>
+        <div id="achievementMsg" class="text-center text-sm mt-2 hidden"></div>
+      </section>
     </section>
   </main>
 
