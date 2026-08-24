@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="site-shell flex flex-col min-h-screen">
+<body class="site-shell flex flex-col min-h-span">
 
   <header class="site-header">
     <nav>
@@ -139,7 +139,6 @@
       const description = document.getElementById('achDescription').value;
       const category = document.getElementById('achCategory').value;
 
-      const msg = document.getElementById('achievementMsg');
       msg.textContent = 'Submitting...';
       msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
       msg.classList.remove('hidden');
@@ -187,6 +186,6 @@
     }
 
     loadAchievements();
-  </script>
+</script>
 </body>
 </html>
