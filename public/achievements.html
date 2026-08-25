@@ -87,8 +87,7 @@
 
       <section class="page-section page-shell">
         <div class="section-heading">
-          <span class="section-badge">Submit Achievement</span>
-          <h2 class="section-title">Share Your Achievement</h2>
+          <span class="section-badge">Submit Achievement</h2>
         </div>
         <form id="achievementForm" class="max-w-md mx-auto space-y-4">
           <div class="form-field">
@@ -112,6 +111,11 @@
             </select>
           </div>
 
+          <div class="form-field">
+            <label class="block text-sm font-medium text-slate-200">Photos</label>
+            <input type="file" id="achPhotos" name="achPhotos" accept="image/*" multiple class="form-control">
+          </div>
+
           <button type="submit" class="primary-button w-full">Submit Achievement</button>
         </form>
         <div id="achievementMsg" class="text-center text-sm mt-2 hidden"></div>
@@ -128,7 +132,7 @@
       this.title = '';
       this.description = '';
       this.category = 'General';
-      this.photoUrl = '';
+      this.achPhotos = [];
     };
 
     const form = document.getElementById('achievementForm');
@@ -138,16 +142,40 @@
       const title = document.getElementById('achTitle').value;
       const description = document.getElementById('achDescription').value;
       const category = document.getElementById('achCategory').value;
+      const photoFiles = document.getElementById('achPhotos').files;
 
+      const msg = document.getElementById('achievementMsg');
       msg.textContent = 'Submitting...';
       msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
       msg.classList.remove('hidden');
 
       try {
+        // Convert selected files to Base64 data URLs
+        constachPhotos = [];
+        const readerPromises = Array.from(achPhotos).map(file => {
+          return new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onload = (e) => resolve(e.target.result);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(file);
+          });
+        });
+        const results = await Promise.all(readerPromises);
+       achPhotos.forEach((file, i) => {
+          if (results[i]) {
+           achPhotos[i] = results[i];
+          }
+        });
+
         const res = await fetch('/api/achievements', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title, description, category })
+          body: JSON.stringify({
+            title,
+            description,
+            category,
+           achPhotos
+          })
         });
         if (res.ok) {
           msg.textContent = 'Achievement submitted successfully!';
@@ -180,6 +208,7 @@
             <h3 class="text-xl font-bold text-slate-100 mb-2">${a.title}</h3>
             <p class="text-slate-300 text-sm">${a.description}</p>
             <p class="text-slate-500 text-xs">Category: ${a.category}</p>
+            ${a.achPhotos && a.achPhotos.length > 0 ? `<p class="text-slate-400 text-xs">${a.achPhotos.length} photo(s) attached</p>` : ''}
           </div>
         </div>
       `).join('');
