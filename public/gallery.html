@@ -74,7 +74,7 @@
 
           <div class="form-field">
             <label class="block text-sm font-medium text-slate-200">Photo</label>
-            <input type="file" id="photoImage" accept="image/*" required class="form-control">
+            <input type="file" id="photoImage" name="photoImage" accept="image/*" multiple required class="form-control">
           </div>
 
           <button type="submit" class="primary-button" style="width: 100%;">Upload Photo</button>
@@ -94,12 +94,21 @@
     const LS_KEY = 'rcpc_gallery_photos';
 
     const EMBEDDED_PHOTOS = [
-      {
+    {
         title: 'Independence Day',
         caption: 'A special moment from our Independence Day celebration.',
         imageUrl: 'images/independence-day-2026.jpeg',
         createdAt: '2026-08-14T00:00:00.000Z'
+      },
+      {
+        title: 'Rashabandhan Celebration',
+        caption: 'A special moment from our Independence Day celebration.',
+        imageUrl: '/home/khusboo/Downloads/WhatsApp Image 2026-09-19 at 23.11.52 (2).jpeg',
+        createdAt: '2026-08-14T00:00:00.000Z'
       }
+      
+    
+
     ];
 
     function normalizeImageUrl(url) {
@@ -173,11 +182,11 @@
     document.getElementById('photoForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const msg = document.getElementById('photoMsg');
-      const file = document.getElementById('photoImage').files[0];
+      const files = document.getElementById('photoImage').files;
       const title = document.getElementById('photoTitle').value;
       const caption = document.getElementById('photoCaption').value;
 
-      if (!file) {
+      if (!files.length) {
         msg.textContent = 'Please choose an image to upload.';
         msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
         msg.classList.remove('hidden');
@@ -188,52 +197,22 @@
       msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
       msg.classList.remove('hidden');
 
-      const reader = new FileReader();
-      reader.onload = async () => {
-        const base64Image = reader.result;
+      try {
+        const formData = new FormData();
+        formData.append('title', title || 'Event Photo');
+        formData.append('caption', caption);
+        Array.from(files).forEach(file => formData.append('photoImage', file));
+        const res = await fetch(PHOTOS_API, { method: 'POST', body: formData });
 
-        try {
-          const res = await fetch(PHOTOS_API, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              title: title || 'Event Photo',
-              caption,
-              imageUrl: base64Image
-            })
-          });
-
-          if (res.ok) {
-            msg.textContent = 'Photo uploaded successfully!';
-            msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
-            document.getElementById('photoForm').reset();
-            await loadPhotos();
-            return;
-          }
-          throw new Error('Upload response failed');
-        } catch (err) {
-          // Offline fallback if the server is unreachable
-          const locals = getLocalPhotos();
-          locals.unshift({
-            title: title || 'Event Photo',
-            caption,
-            imageUrl: base64Image,
-            createdAt: new Date().toISOString()
-          });
-          saveLocalPhotos(locals);
-          msg.textContent = 'Server unreachable. Saved photo locally to this browser!';
-          msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
-          document.getElementById('photoForm').reset();
-          renderPhotos([...locals, ...EMBEDDED_PHOTOS]);
-        }
-      };
-
-      reader.onerror = () => {
-        msg.textContent = 'Error reading photo file.';
+        if (!res.ok) throw new Error('Upload response failed');
+        msg.textContent = 'Photos uploaded successfully!';
+        msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
+        document.getElementById('photoForm').reset();
+        await loadPhotos();
+      } catch (err) {
+        msg.textContent = 'Upload failed. Please try again.';
         msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
-      };
-
-      reader.readAsDataURL(file);
+      }
     });
 
     loadPhotos();

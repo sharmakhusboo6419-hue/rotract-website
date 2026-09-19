@@ -25,8 +25,23 @@ function getStorageRoot() {
 const storageRoot = getStorageRoot();
 const achievementsDirectory = path.join(storageRoot, 'public', 'uploads', 'achievements');
 const achievementsFile = path.join(storageRoot, 'data', 'achievements.json');
+const galleryDirectory = path.join(storageRoot, 'public', 'uploads', 'gallery');
+const galleryFile = path.join(storageRoot, 'data', 'gallery.json');
 fs.mkdirSync(path.dirname(achievementsFile), { recursive: true });
 fs.mkdirSync(achievementsDirectory, { recursive: true });
+fs.mkdirSync(galleryDirectory, { recursive: true });
+
+const galleryUpload = multer({
+  storage: multer.diskStorage({
+    destination: galleryDirectory,
+    filename: (req, file, callback) => {
+      const extension = path.extname(file.originalname).toLowerCase();
+      callback(null, `${Date.now()}-${Math.round(Math.random() * 1e9)}${extension}`);
+    }
+  }),
+  fileFilter: (req, file, callback) => callback(null, file.mimetype.startsWith('image/')),
+  limits: { files: 20, fileSize: 15 * 1024 * 1024 }
+});
 
 const achievementUpload = multer({
   storage: multer.diskStorage({
@@ -59,29 +74,51 @@ function saveAchievements(achievements) {
   }
 }
 
+function readGalleryPhotos() {
+  try {
+    return JSON.parse(fs.readFileSync(galleryFile, 'utf8'));
+  } catch (error) {
+    return [];
+  }
+}
+
+function saveGalleryPhotos(photos) {
+  try {
+    fs.writeFileSync(galleryFile, JSON.stringify(photos, null, 2));
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 app.get('/api/photos', (req, res) => {
-  const photos = global.photos || [];
-  res.json(photos);
+  res.json(readGalleryPhotos());
 });
 
-app.post('/api/photos', (req, res) => {
+app.post('/api/photos', galleryUpload.array('photoImage', 20), (req, res) => {
   const body = req.body || {};
   const { title, caption, imageUrl } = body;
-  if (!title || !imageUrl) {
+  const uploadedFiles = req.files || [];
+  if (!title || (!imageUrl && uploadedFiles.length === 0)) {
     return res.status(400).json({ error: 'Title and image required' });
   }
-  global.photos = global.photos || [];
-  const photo = {
-    id: global.photos.length + 1,
-    title,
-    caption: caption || '',
-    imageUrl,
-    createdAt: new Date()
-  };
-  global.photos.push(photo);
-  res.status(201).json({ message: 'Photo uploaded!', photo });
+  const photos = readGalleryPhotos();
+  const newPhotos = uploadedFiles.length > 0
+    ? uploadedFiles.map(file => ({
+        id: Date.now() + Math.random(),
+        title,
+        caption: caption || '',
+        imageUrl: `/uploads/gallery/${file.filename}`,
+        createdAt: new Date()
+      }))
+    : [{ id: Date.now(), title, caption: caption || '', imageUrl, createdAt: new Date() }];
+  photos.unshift(...newPhotos);
+  if (!saveGalleryPhotos(photos)) {
+    return res.status(503).json({ error: 'Gallery storage is currently unavailable' });
+  }
+  res.status(201).json({ message: 'Photo uploaded!', photos: newPhotos });
 });
 
 app.get('/api/achievements', (req, res) => {
