@@ -406,6 +406,42 @@ body.site-shell main {
   gap: 1.25rem;
 }
 
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.achievement-card {
+  overflow: hidden;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 1.2rem;
+  background: rgba(24, 24, 24, 0.88);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.32);
+}
+
+.achievement-card > div:not(.achievement-images) {
+  padding: 1.25rem;
+}
+
+.achievement-images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.35rem;
+  background: #111;
+}
+
+.achievement-images img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  display: block;
+  object-fit: cover;
+}
+
+.achievement-icon {
+  font-size: 1.8rem;
+}
+
 .form-card {
   padding: 2rem;
 }

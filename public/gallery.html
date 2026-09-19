@@ -84,7 +84,14 @@
     const PHOTOS_API = '/api/photos';
     const LS_KEY = 'rcpc_gallery_photos';
 
-    const EMBEDDED_PHOTOS = [];
+    const EMBEDDED_PHOTOS = [
+      {
+        title: 'Independence Day',
+        caption: 'A special moment from our Independence Day celebration.',
+        imageUrl: 'images/independence-day-2026.jpeg',
+        createdAt: '2026-08-14T00:00:00.000Z'
+      }
+    ];
 
     function normalizeImageUrl(url) {
       if (!url) return 'images/rcpc-event-1.jpg';
