@@ -20,7 +20,9 @@
         <a href="meet.html" class="hover:underline">Meet Us</a>
         <a href="join.html" class="hover:underline">Join Us</a>
         <a href="gallery.html" class="font-semibold underline">Gallery</a>
+        <a href="achievements.html" class="hover:underline">Achievements</a>
         <a href="contact.html" class="hover:underline">Contact</a>
+
       </div>
     </nav>
   </header>
@@ -36,6 +38,16 @@
       </div>
     </section>
 
+    <section class="page-shell achievements-preview" aria-labelledby="achievements-preview-heading">
+      <div class="achievements-preview__medal" aria-hidden="true">✦</div>
+      <div>
+        <span class="section-badge">Open to everyone</span>
+        <h2 id="achievements-preview-heading">Beyond the photographs: our club honours board</h2>
+        <p>Discover the service, leadership, and defining moments that RCPC is proud to share with every visitor.</p>
+      </div>
+      <a class="secondary-button" href="achievements.html">View achievements <span aria-hidden="true">→</span></a>
+    </section>
+
     <section class="page-section page-shell">
       <div class="section-heading">
         <span class="section-badge">Gallery</span>
@@ -43,15 +55,6 @@
       </div>
       <div id="photoGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         <p class="text-slate-500 col-span-full text-center">Loading photos...</p>
-        <figure class="home-project-card overflow-hidden">
-          <a href="images/independence-day-2026.jpeg" target="_blank" rel="noopener">
-            <img src="images/independence-day-2026.jpeg" alt="Independence Day" class="w-full h-56 object-cover rounded-t-lg bg-slate-800">
-          </a>
-          <figcaption class="p-4">
-            <h3 class="text-lg font-bold text-slate-100 mb-1">Independence Day</h3>
-            <p class="text-slate-400 text-sm mt-2 leading-relaxed">A special moment from our Independence Day celebration.</p>
-          </figcaption>
-        </figure>
       </div>
 
       <div class="form-card" style="max-width: 42rem; margin-inline: auto; margin-top: 3rem;">
@@ -73,7 +76,7 @@
           </div>
 
           <div class="form-field">
-            <label class="block text-sm font-medium text-slate-200">Photo</label>
+            <label class="block text-sm font-medium text-slate-200">Photo(s)</label>
             <input type="file" id="photoImage" name="photoImage" accept="image/*" multiple required class="form-control">
           </div>
 
@@ -91,28 +94,18 @@
 
   <script>
     const PHOTOS_API = '/api/photos';
-    const LS_KEY = 'rcpc_gallery_photos';
 
     const EMBEDDED_PHOTOS = [
-    {
+      {
         title: 'Independence Day',
         caption: 'A special moment from our Independence Day celebration.',
         imageUrl: 'images/independence-day-2026.jpeg',
         createdAt: '2026-08-14T00:00:00.000Z'
-      },
-      {
-        title: 'Rashabandhan Celebration',
-        caption: 'A special moment from our Independence Day celebration.',
-        imageUrl: '/home/khusboo/Downloads/WhatsApp Image 2026-09-19 at 23.11.52 (2).jpeg',
-        createdAt: '2026-08-14T00:00:00.000Z'
       }
-      
-    
-
     ];
 
     function normalizeImageUrl(url) {
-      if (!url) return 'images/rcpc-event-1.jpg';
+      if (!url) return 'images/independence-day-2026.jpeg';
       if (url.startsWith('data:image/') || url.startsWith('http://') || url.startsWith('https://')) {
         return url;
       }
@@ -125,24 +118,12 @@
       return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
     }
 
-    function getLocalPhotos() {
-      try {
-        return JSON.parse(localStorage.getItem(LS_KEY) || '[]');
-      } catch (err) {
-        return [];
-      }
-    }
-
-    function saveLocalPhotos(photos) {
-      localStorage.setItem(LS_KEY, JSON.stringify(photos));
-    }
-
     function photoCard(p) {
       const url = normalizeImageUrl(p.imageUrl);
       return `
         <figure class="home-project-card overflow-hidden">
           <a href="${url}" target="_blank" rel="noopener">
-            <img src="${url}" alt="${p.title}" class="w-full h-56 object-cover rounded-t-lg bg-slate-800" onerror="this.src='images/rcpc-event-1.jpg';">
+            <img src="${url}" alt="${p.title}" class="w-full h-56 object-cover rounded-t-lg bg-slate-800" onerror="this.src='images/independence-day-2026.jpeg';">
           </a>
           <figcaption class="p-4">
             <h3 class="text-lg font-bold text-slate-100 mb-1">${p.title || 'Event Photo'}</h3>
@@ -157,7 +138,7 @@
 
     function renderPhotos(photos) {
       const grid = document.getElementById('photoGrid');
-      if (!photos.length) {
+      if (!photos || !photos.length) {
         grid.innerHTML = `<p class="text-slate-500 col-span-full text-center">No photos yet. Upload your first event photo above!</p>`;
         return;
       }
@@ -165,18 +146,27 @@
     }
 
     async function loadPhotos() {
-      const locals = getLocalPhotos();
       try {
         const res = await fetch(PHOTOS_API);
         if (res.ok) {
-          const photos = await res.json();
-          renderPhotos([...photos, ...locals, ...EMBEDDED_PHOTOS]);
+          const apiPhotos = await res.json();
+          renderPhotos([...apiPhotos, ...EMBEDDED_PHOTOS]);
           return;
         }
       } catch (err) {
-        console.warn('Server offline, loading local and embedded photos.');
+        console.warn('Unable to reach server API, displaying static photos.');
       }
-      renderPhotos([...locals, ...EMBEDDED_PHOTOS]);
+      renderPhotos([...EMBEDDED_PHOTOS]);
+    }
+
+    // Helper to convert File object to Base64 data string
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
     }
 
     document.getElementById('photoForm').addEventListener('submit', async (e) => {
@@ -193,24 +183,34 @@
         return;
       }
 
-      msg.textContent = 'Uploading photo...';
+      msg.textContent = 'Uploading photo(s)...';
       msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
       msg.classList.remove('hidden');
 
       try {
-        const formData = new FormData();
-        formData.append('title', title || 'Event Photo');
-        formData.append('caption', caption);
-        Array.from(files).forEach(file => formData.append('photoImage', file));
-        const res = await fetch(PHOTOS_API, { method: 'POST', body: formData });
+        // Convert all selected images to Base64 and upload each to MongoDB
+        for (let i = 0; i < files.length; i++) {
+          const base64Image = await fileToBase64(files[i]);
+          const res = await fetch(PHOTOS_API, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              title: title || 'Event Photo',
+              caption: caption || '',
+              imageUrl: base64Image
+            })
+          });
 
-        if (!res.ok) throw new Error('Upload response failed');
-        msg.textContent = 'Photos uploaded successfully!';
+          if (!res.ok) throw new Error('Failed to upload image');
+        }
+
+        msg.textContent = 'Photo(s) uploaded successfully! Visible to everyone now.';
         msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
         document.getElementById('photoForm').reset();
         await loadPhotos();
       } catch (err) {
-        msg.textContent = 'Upload failed. Please try again.';
+        console.error('Upload error:', err);
+        msg.textContent = 'Upload failed. Ensure server database is connected.';
         msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
       }
     });

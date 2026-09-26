@@ -3,186 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rotaract Club - Achievements</title>
+  <title>Club Achievements | Rotaract Club of Presidency College</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="site-shell flex flex-col min-h-span">
-
+<body class="site-shell flex flex-col min-h-screen">
   <header class="site-header">
-    <nav>
-      <a href="index.html" class="flex items-center group">
-        <img src="images/rcpc-theme-white.png" alt="RCPC" class="header-logo">
-      </a>
+    <nav aria-label="Primary navigation">
+      <a href="index.html" class="flex items-center group"><img src="images/rcpc-theme-white.png" alt="Rotaract Club of Presidency College" class="header-logo"></a>
       <div class="space-x-6 text-sm sm:text-base font-medium">
-        <a href="index.html" class="hover:underline">Home</a>
-        <a href="about.html" class="hover:underline">About</a>
-        <a href="meet.html" class="hover:underline">Meet Us</a>
-        <a href="join.html" class="hover:underline">Join Us</a>
-        <a href="gallery.html" class="hover:underline">Gallery</a>
-        <a href="achievements.html" class="font-semibold underline">Achievements</a>
-        <a href="contact.html" class="hover:underline">Contact</a>
+        <a href="index.html" class="hover:underline">Home</a><a href="about.html" class="hover:underline">About</a><a href="meet.html" class="hover:underline">Meet Us</a><a href="join.html" class="hover:underline">Join Us</a><a href="gallery.html" class="hover:underline">Gallery</a><a href="achievements.html" class="font-semibold underline" aria-current="page">Achievements</a><a href="contact.html" class="hover:underline">Contact</a>
       </div>
     </nav>
   </header>
-
   <main class="flex-grow">
-    <section class="page-hero">
+    <section class="page-hero honours-hero">
       <div class="page-shell">
-        <span class="hero-kicker">Our Achievements</span>
-        <h1 class="page-hero__title gold-text">Club Milestones & Awards</h1>
-        <p class="page-hero__copy">
-          Celebrating the accomplishments and milestones of the Rotaract Club of <span class="presidency-word">Presidency</span> College.
-        </p>
+        <span class="hero-kicker">RCPC honours board</span>
+        <h1 class="page-hero__title gold-text">Club Milestones<br>&amp; Awards</h1>
+        <p class="page-hero__copy">A public record of the service, leadership, and shared moments that define the Rotaract Club of <span class="presidency-word">Presidency</span> College.</p>
+        <p class="public-note"><span aria-hidden="true">✦</span> This page is open for everyone to explore — no sign-in needed.</p>
       </div>
     </section>
-
-    <section class="page-section page-shell">
+    <section class="page-section page-shell" aria-labelledby="milestones-heading">
       <div class="section-heading">
-        <span class="section-badge">Achievements</span>
-        <h2 class="section-title">Our Proud Moments</h2>
+        <span class="section-badge">Since 2003</span>
+        <h2 id="milestones-heading" class="section-title">Milestones we are proud to share</h2>
+        <p class="section-subtitle">Our enduring club story stays visible here, alongside newly submitted achievements from the RCPC community.</p>
       </div>
-
-      <div class="achievement-grid">
-        <div class="achievement-card">
-          <div class="achievement-icon">🏆</div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-100 mb-2">21 Years of Service</h3>
-            <p class="text-slate-300 text-sm">Chartered in 2003, RCPC has been serving the Bengaluru community for over two decades.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card">
-          <div class="achievement-icon">🙌</div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-100 mb-2">500+ Young Leaders</h3>
-            <p class="text-slate-300 text-sm">Over five hundred students have benefited from RCPC's programs and leadership training.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card">
-          <div class="achievement-icon">📅</div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-100 mb-2">300+ Projects & Events</h3>
-            <p class="text-slate-300 text-sm">From cleanliness drives to blood donation camps, RCPC has completed over three hundred service initiatives.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card">
-          <div class="achievement-icon">🌐</div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-100 mb-2">Rotary District 3192</h3>
-            <p class="text-slate-300 text-sm">RCPC is chartered under Rotary International's District 3192, Zone Arnava.</p>
-          </div>
-        </div>
-
-        <div class="achievement-card">
-          <div class="achievement-icon">🤝</div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-100 mb-2">Global Connections</h3>
-            <p class="text-slate-300 text-sm">Members have participated in international exchanges, district conferences, and global service projects.</p>
-          </div>
-        </div>
+      <p id="achievementStatus" class="achievement-status" role="status">Showing our club’s permanent milestones.</p>
+      <div id="achievementGrid" class="achievement-grid" aria-live="polite">
+        <article class="achievement-card"><div class="achievement-card__top"><span class="achievement-icon" aria-hidden="true">🏆</span><span class="achievement-category">Club legacy</span></div><div class="achievement-card__body"><h3>21 Years of Service</h3><p>Chartered in 2003, RCPC has been serving the Bengaluru community for over two decades.</p></div></article>
+        <article class="achievement-card"><div class="achievement-card__top"><span class="achievement-icon" aria-hidden="true">🙌</span><span class="achievement-category">Leadership</span></div><div class="achievement-card__body"><h3>500+ Young Leaders</h3><p>Over five hundred students have benefited from RCPC programs and leadership training.</p></div></article>
+        <article class="achievement-card"><div class="achievement-card__top"><span class="achievement-icon" aria-hidden="true">✦</span><span class="achievement-category">Service</span></div><div class="achievement-card__body"><h3>300+ Projects &amp; Events</h3><p>From cleanliness drives to blood donation camps, RCPC has completed over three hundred service initiatives.</p></div></article>
+        <article class="achievement-card"><div class="achievement-card__top"><span class="achievement-icon" aria-hidden="true">◉</span><span class="achievement-category">Community</span></div><div class="achievement-card__body"><h3>Rotary District 3192</h3><p>RCPC is chartered under Rotary International’s District 3192, Zone Arnava.</p></div></article>
+        <article class="achievement-card"><div class="achievement-card__top"><span class="achievement-icon" aria-hidden="true">↗</span><span class="achievement-category">Connection</span></div><div class="achievement-card__body"><h3>Global Connections</h3><p>Members have participated in international exchanges, district conferences, and global service projects.</p></div></article>
       </div>
-
-      <section class="page-section page-shell">
-        <div class="section-heading">
-          <span class="section-badge">Submit Achievement</h2>
-        </div>
-        <form id="achievementForm" class="form-card max-w-md mx-auto space-y-4" enctype="multipart/form-data">
-          <div class="form-field">
-            <label class="block text-sm font-medium text-slate-200">Title</label>
-            <input type="text" id="achTitle" required class="form-control">
-          </div>
-
-          <div class="form-field">
-            <label class="block text-sm font-medium text-slate-200">Description</label>
-            <textarea id="achDescription" rows="3" required class="form-control"></textarea>
-          </div>
-
-          <div class="form-field">
-            <label class="block text-sm font-medium text-slate-200">Category</label>
-            <select id="achCategory" class="form-control">
-              <option value="General">General</option>
-              <option value="Service">Service</option>
-              <option value="Leadership">Leadership</option>
-              <option value="Event">Event</option>
-              <option value="Award">Award</option>
-            </select>
-          </div>
-
-          <div class="form-field">
-            <label class="block text-sm font-medium text-slate-200" for="achPhotos">Achievement images</label>
-            <input type="file" id="achPhotos" name="achPhotos" accept="image/*" multiple class="form-control">
-            <p class="text-slate-400 text-xs mt-2">Add up to 10 images. They will be visible to every website visitor.</p>
-          </div>
-
-          <button type="submit" class="primary-button w-full">Submit Achievement</button>
+    </section>
+    <section class="submission-section" aria-labelledby="submit-heading">
+      <div class="page-shell submission-layout">
+        <div class="submission-intro"><span class="section-badge">Share a milestone</span><h2 id="submit-heading" class="section-title">Add to the record</h2><p>Have an RCPC achievement worth celebrating? Send it in with a short description and optional photographs. Once submitted, it will be visible on this public page.</p></div>
+        <form id="achievementForm" class="form-card space-y-4" enctype="multipart/form-data">
+          <div class="form-field"><label for="achTitle">Achievement title</label><input type="text" id="achTitle" name="title" required maxlength="160" placeholder="e.g. Best Community Service Initiative" class="form-control"></div>
+          <div class="form-field"><label for="achDescription">What did the club achieve?</label><textarea id="achDescription" name="description" rows="4" required maxlength="1200" placeholder="Share the achievement, the people involved, and why it matters." class="form-control"></textarea></div>
+          <div class="form-field"><label for="achCategory">Category</label><select id="achCategory" name="category" class="form-control"><option value="General">General</option><option value="Service">Service</option><option value="Leadership">Leadership</option><option value="Event">Event</option><option value="Award">Award</option></select></div>
+          <div class="form-field"><label for="achPhotos">Achievement images <span class="text-slate-400 font-normal">(optional)</span></label><input type="file" id="achPhotos" name="achPhotos" accept="image/*" multiple class="form-control"><p class="text-slate-400 text-xs">Up to 10 images. Each image must be 10 MB or smaller.</p></div>
+          <button type="submit" class="primary-button w-full">Submit achievement</button><p id="achievementMsg" class="status-message text-center hidden" role="status"></p>
         </form>
-        <div id="achievementMsg" class="text-center text-sm mt-2 hidden"></div>
-      </section>
+      </div>
     </section>
   </main>
-
-  <footer class="site-footer py-6 text-center text-sm border-t border-amber-500/30">
-    <p>&copy; Rotaract Club of <span class="presidency-word">Presidency</span> College. All rights reserved.</p>
-  </footer>
-
+  <footer class="site-footer py-6 text-center text-sm border-t border-amber-500/30"><p>&copy; Rotaract Club of <span class="presidency-word">Presidency</span> College. All rights reserved.</p></footer>
   <script>
-    const form = document.getElementById('achievementForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const msg = document.getElementById('achievementMsg');
-      msg.textContent = 'Submitting...';
-      msg.className = 'mt-3 text-center text-sm text-amber-300 font-medium';
-      msg.classList.remove('hidden');
-
-      try {
-        const formData = new FormData(form);
-        const res = await fetch('/api/achievements', {
-          method: 'POST',
-          body: formData
-        });
-        if (res.ok) {
-          msg.textContent = 'Achievement submitted successfully!';
-          msg.className = 'mt-3 text-center text-sm text-emerald-400 font-medium';
-          form.reset();
-          loadAchievements();
-        } else {
-          const err = await res.json();
-          msg.textContent = err.error || 'Submission failed';
-          msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
-        }
-      } catch (err) {
-        msg.textContent = 'Error submitting. Please try again.';
-        msg.className = 'mt-3 text-center text-sm text-rose-400 font-medium';
-      }
-    });
-
-    async function loadAchievements() {
-      const res = await fetch('/api/achievements');
-      const achievements = await res.json();
-      const grid = document.querySelector('.achievement-grid');
-      if (achievements.length === 0) {
-        grid.innerHTML = '<p class="text-slate-500 col-span-full text-center">No achievements yet. Submit your first!</p>';
-        return;
-      }
-      grid.innerHTML = achievements.map(a => `
-        <div class="achievement-card">
-          ${a.achPhotos && a.achPhotos.length > 0 ? `<div class="achievement-images">${a.achPhotos.map((photo, index) => `<img src="${photo}" alt="${a.title} image ${index + 1}" loading="lazy">`).join('')}</div>` : ''}
-          <div class="achievement-icon">🏆</div>
-          <div>
-            <h3 class="text-xl font-bold text-slate-100 mb-2">${a.title}</h3>
-            <p class="text-slate-300 text-sm">${a.description}</p>
-            <p class="text-slate-500 text-xs">Category: ${a.category}</p>
-            ${a.achPhotos && a.achPhotos.length > 0 ? `<p class="text-slate-400 text-xs">${a.achPhotos.length} photo(s) attached</p>` : ''}
-          </div>
-        </div>
-      `).join('');
+    const DEFAULT_ACHIEVEMENTS = [
+      ['21 Years of Service', 'Chartered in 2003, RCPC has been serving the Bengaluru community for over two decades.', 'Club legacy', '🏆'], ['500+ Young Leaders', 'Over five hundred students have benefited from RCPC programs and leadership training.', 'Leadership', '🙌'], ['300+ Projects & Events', 'From cleanliness drives to blood donation camps, RCPC has completed over three hundred service initiatives.', 'Service', '✦'], ['Rotary District 3192', 'RCPC is chartered under Rotary International’s District 3192, Zone Arnava.', 'Community', '◉'], ['Global Connections', 'Members have participated in international exchanges, district conferences, and global service projects.', 'Connection', '↗']
+    ].map(([title, description, category, icon]) => ({ title, description, category, icon }));
+    const grid = document.getElementById('achievementGrid'); const status = document.getElementById('achievementStatus'); const form = document.getElementById('achievementForm'); const message = document.getElementById('achievementMsg');
+    const safeImageUrl = value => /^(?:\/uploads\/|images\/|https?:\/\/|data:image\/(?:png|jpe?g|gif|webp);base64,)/i.test(String(value || '').trim()) ? String(value).trim() : '';
+    function createCard(item, permanent) {
+      const card = document.createElement('article'); card.className = 'achievement-card';
+      const photos = Array.isArray(item.achPhotos) ? item.achPhotos.map(safeImageUrl).filter(Boolean).slice(0, 10) : [];
+      if (photos.length) { const group = document.createElement('div'); group.className = 'achievement-images'; photos.forEach((src, i) => { const image = document.createElement('img'); image.src = src; image.loading = 'lazy'; image.alt = `${String(item.title || 'Achievement')} image ${i + 1}`; group.append(image); }); card.append(group); }
+      const top = document.createElement('div'); top.className = 'achievement-card__top'; const icon = document.createElement('span'); icon.className = 'achievement-icon'; icon.setAttribute('aria-hidden', 'true'); icon.textContent = item.icon || (permanent ? '✦' : '🏅'); const category = document.createElement('span'); category.className = 'achievement-category'; category.textContent = item.category || 'General'; top.append(icon, category);
+      const body = document.createElement('div'); body.className = 'achievement-card__body'; const title = document.createElement('h3'); title.textContent = item.title || 'Club achievement'; const description = document.createElement('p'); description.textContent = item.description || 'A proud moment from the RCPC community.'; body.append(title, description);
+      if (!permanent && item.createdAt) { const date = document.createElement('p'); date.className = 'achievement-date'; const parsed = new Date(item.createdAt); date.textContent = Number.isNaN(parsed.getTime()) ? '' : `Shared ${parsed.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}`; body.append(date); } card.append(top, body); return card;
     }
-
+    function render(records) { grid.replaceChildren(...DEFAULT_ACHIEVEMENTS.map(item => createCard(item, true)), ...records.map(item => createCard(item, false))); }
+    async function loadAchievements() { try { const response = await fetch('/api/achievements'); if (!response.ok) throw new Error(); const records = await response.json(); const publicRecords = Array.isArray(records) ? records : []; render(publicRecords); status.textContent = publicRecords.length ? `Showing ${DEFAULT_ACHIEVEMENTS.length} club milestones and ${publicRecords.length} community submission${publicRecords.length === 1 ? '' : 's'}.` : 'Showing our club’s permanent milestones. New community submissions will appear here.'; } catch { render([]); status.textContent = 'Our permanent club milestones are available below. Community submissions are temporarily unavailable.'; } }
+    form.addEventListener('submit', async event => { event.preventDefault(); message.textContent = 'Submitting your achievement…'; message.className = 'status-message text-center text-amber-300'; try { const response = await fetch('/api/achievements', { method: 'POST', body: new FormData(form) }); if (!response.ok) { const result = await response.json().catch(() => ({})); throw new Error(result.error || 'Submission failed.'); } message.textContent = 'Achievement submitted successfully. It is now visible to everyone.'; message.className = 'status-message text-center text-emerald-400'; form.reset(); loadAchievements(); } catch (error) { message.textContent = error.message || 'Unable to submit right now. Please try again.'; message.className = 'status-message text-center text-rose-400'; } });
     loadAchievements();
-</script>
+  </script>
 </body>
 </html>
